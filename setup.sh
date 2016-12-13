@@ -25,7 +25,7 @@ cd sextractor-2.19.5/
 make
 make install
 cd ..
-rm -rf sextractor-2.19.5.tar.g
+rm -rf sextractor-2.19.5.tar.gz
 }
 
 function lintInstall () {
