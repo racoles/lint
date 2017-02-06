@@ -38,6 +38,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         #Numpy delete overscan Columns (axis = 2)
         subtractedAndRemoved = delete(subtractedAndRemoved,columns,2)
         #Return overscan subtracted array
+        print "Overscan subtraction and masking is complete"
         return subtractedAndRemoved
     else:
         return fitsArrayTimeSubtraction
