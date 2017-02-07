@@ -26,12 +26,12 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         #Get means of overscan sections
         for ii in range(arrayCopy.shape[0]):
             for xx in range(rows.shape[0]):
-                overscanMeanRowGroups[ii,xx] = arrayCopy[ii,rows[xx],:].mean
+                overscanMeanRowGroups[ii,xx] = arrayCopy[ii,rows[xx],:].mean()
             for yy in range(columns.shape[0]):
-                overscanMeanColumnGroups[ii,yy] = arrayCopy[ii,:,columns[yy]].mean
+                overscanMeanColumnGroups[ii,yy] = arrayCopy[ii,:,columns[yy]].mean()
         #Subtract overscans from array
         for jj in range(arrayCopy.shape[0]):
-            overscanMean[jj] = (overscanMeanRowGroups[jj,:].mean + overscanMeanColumnGroups[jj,:].mean)/2
+            overscanMean[jj] = (overscanMeanRowGroups[jj,:].mean() + overscanMeanColumnGroups[jj,:].mean())/2
             subtractedArray[jj] = arrayCopy[jj,:,:] - overscanMean[jj]
         #Numpy delete overscan Rows (axis = 1)
         subtractedAndRemoved = delete(subtractedArray,rows,1)
