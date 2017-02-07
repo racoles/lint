@@ -7,20 +7,20 @@ Subtract and remove overscan if overscanSubtractBOOL bool is true
 
 '''
 # Import
-from numpy import delete, copy, empty
+from numpy import delete, copy, zeros, array
 def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsArrayTimeSubtraction):
 #Subtract overscan if overscanSubtract is true
     if overscanSubtractBOOL == bool(1):
-        print "You have selected to subtract bias in your image using overscan."
+        print "You have selected to subtract bias in your image using overscan"
         print "LINT will now subtract the overscan from your image, and mask the overscan regions"
         #Convert overscan strings from config file to lists (overscanRows, overscanColumns)
+        rows = array(stringToList(overscanRows))
+        columns = array(stringToList(overscanColumns))
         #Initialize numpy lists of overscan rows and columns
-        rows = empty(len(stringToList(overscanRows)))
-        columns = empty(len(stringToList(overscanColumns)))
-        overscanMeanRowGroups = empty((fitsArrayTimeSubtraction.shape[0],rows.shape[0]))
-        overscanMeanColumnGroups = empty((fitsArrayTimeSubtraction.shape[0],columns.shape[0]))
-        overscanMean = empty((fitsArrayTimeSubtraction.shape[0]))
-        subtractedArray = empty((fitsArrayTimeSubtraction.shape[0],fitsArrayTimeSubtraction.shape[1],fitsArrayTimeSubtraction.shape[2]))
+        overscanMeanRowGroups = zeros((fitsArrayTimeSubtraction.shape[0],rows.shape[0]))
+        overscanMeanColumnGroups = zeros((fitsArrayTimeSubtraction.shape[0],columns.shape[0]))
+        overscanMean = zeros((fitsArrayTimeSubtraction.shape[0]))
+        subtractedArray = zeros((fitsArrayTimeSubtraction.shape[0],fitsArrayTimeSubtraction.shape[1],fitsArrayTimeSubtraction.shape[2]))
         #Copy array
         arrayCopy = copy(fitsArrayTimeSubtraction)
         #Get means of overscan sections
