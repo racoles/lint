@@ -13,10 +13,10 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
     if overscanSubtractBOOL == bool(1):
         print "You have selected to subtract bias in your image using overscan."
         print "LINT will now subtract the overscan from your image, and mask the overscan regions"
-        #2D to start MAKE 3D
+        #Convert overscan strings from config file to lists (overscanRows, overscanColumns)
         #Initialize numpy lists of overscan rows and columns
-        rows = empty(overscanRows)
-        columns = empty(overscanColumns)
+        rows = empty(len(stringToList(overscanRows)))
+        columns = empty(len(stringToList(overscanColumns)))
         overscanMeanRowGroups = empty((fitsArrayTimeSubtraction.shape[0],rows.shape[0]))
         overscanMeanColumnGroups = empty((fitsArrayTimeSubtraction.shape[0],columns.shape[0]))
         overscanMean = empty((fitsArrayTimeSubtraction.shape[0]))
@@ -42,4 +42,18 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         return subtractedAndRemoved
     else:
         return fitsArrayTimeSubtraction
+    
+    
+def stringToList(x):
+#Convert overscan strings from config file to lists (overscanRows, overscanColumns)
+    result = []
+    for part in x.split(','):
+        if '-' in part:
+            a, b = part.split('-')
+            a, b = int(a), int(b)
+            result.extend(range(a, b + 1))
+    #else:
+        #a = int(part)
+        #result.append(a)
+    return result
         
