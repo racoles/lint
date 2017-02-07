@@ -7,6 +7,7 @@ This program uses flats from CCDs to find the amount of dust, debris, or other c
 
 The code will:
     -Load flats (fits).
+    -Subtract overscan and mask overscan regions (if overscanSubtractBOOL is "True")
     -Scale the flats to a common mean.
     -Stack the flats using a median.
     -Subtract the average sky value.
@@ -32,6 +33,8 @@ Modules:
     loadFits:
         Load fits files image data into a 3D array.
         Saves data to a fits file
+    overscan:
+        Subtract and remove overscan (if overscanSubtractBOOL bool is true)
     scaleAndStack:
         Scales the images using a common mean.
             (find the mean of all of the data and scale the data so that every image has that same baseline mean)
@@ -68,6 +71,7 @@ To do:
     -check to see if dependencies are installed
     -add Try command for errors
     -mask bad pixel columns
+    -test installation code
     
 ------------------------------------------------------------------------------------------------------------------------------
 This research makes use of:
@@ -79,7 +83,7 @@ This research makes use of:
 # Import #######################################################################################
 import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput
 from loadConfig import loadConfig
-from overscan import subtractOverscan, removeOverscan
+from overscan import subtractOverscan
 from skyValue import subtractAverageSky
 from timeSubtraction import timeSub
 
@@ -93,20 +97,14 @@ lintDict = loadConfig()
 if __name__ == '__main__':
     #perform time subtraction
     fitsArrayTimeSubtraction = timeSub(lintDict['fitsPath'], lintDict['ext']) #to perform time subtraction
-    #subtracat overscan if overscanSubtractBOOL is "True"
-    fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanSubtractLocation'],
-                                                   lintDict['overscanTopRows'], lintDict['overscanBottomRows'],
-                                                   lintDict['overscanLeftColumns'], lintDict['overscanRightColumns'],
-                                                   fitsArrayTimeSubtraction)
-    #remove overscan if overscanRemoveBOOL is "True"
-    fitsArrayOverscanRemoved = removeOverscan(lintDict['overscanRemoveBOOL'], lintDict['overscanTopRows'],
-                                              lintDict['overscanBottomRows'], lintDict['overscanLeftColumns'],
-                                              lintDict['overscanRightColumns'], fitsArrayOverscanSubtracted)
+    #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
+    fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
+                                                   lintDict['overscanColumns'], fitsArrayTimeSubtraction)
     #prepare the image for analysis
         #scale and stack images.
         #subtract the average sky value from the image. 
         #invert the image to make attenuation spots appear positive to photometry code.
-    invertedImage = (subtractAverageSky(scaleAndStack.stackImages(scaleAndStack.scaleToMean(fitsArrayOverscanRemoved))))*(-1)
+    invertedImage = (subtractAverageSky(scaleAndStack.stackImages(scaleAndStack.scaleToMean(fitsArrayOverscanSubtracted))))*(-1)
     #save the scaled, stacked, inverted image
     outputName = loadFITS.saveFITS(lintDict['fitsPath'], invertedImage, lintDict['outputFITS'])
     #send the scaled/stacked/inverted image to SExtractor with the user give parameter file
