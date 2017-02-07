@@ -26,9 +26,9 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         #Get means of overscan sections
         for ii in range(arrayCopy.shape[0]):
             for xx in range(rows.shape[0]):
-                overscanMeanRowGroups[ii,xx] = arrayCopy[ii,rows[xx],:].mean()
+                overscanMeanRowGroups[ii,xx] = int(arrayCopy[ii,rows[xx],:].mean())
             for yy in range(columns.shape[0]):
-                overscanMeanColumnGroups[ii,yy] = arrayCopy[ii,:,columns[yy]].mean()
+                overscanMeanColumnGroups[ii,yy] = int(arrayCopy[ii,:,columns[yy]].mean())
         #Subtract overscans from array
         for jj in range(arrayCopy.shape[0]):
             overscanMean[jj] = (overscanMeanRowGroups[jj,:].mean() + overscanMeanColumnGroups[jj,:].mean())/2
@@ -46,7 +46,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
     
 def stringToList(x):
 #Convert overscan strings from config file to lists (overscanRows, overscanColumns)
-    result = []
+    result = [0]
     for part in x.split(','):
         if '-' in part:
             a, b = part.split('-')
