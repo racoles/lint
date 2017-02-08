@@ -14,12 +14,14 @@ Make histograms of:
     debris versus clean area
 '''
 # Import
+from loadFITS import outputsFolder
+
 from astropy.io.ascii import SExtractor, write
 from numpy import logical_not, pi, amin, amax, arange, diff, log10, column_stack, poly1d, polyfit
 from re import search
 import matplotlib.pyplot as plt
 
-def loadSExOutput(parameterFile):
+def loadSExOutput(parameterFile, output_folder_path):
 #Load SExtractor output to table    
     #Find name of SExtractor output file from parameter file
     with open(parameterFile, 'r') as inF:
@@ -31,9 +33,11 @@ def loadSExOutput(parameterFile):
     #Read SExtractor output file
     so = SExtractor()
     sexOutput = so.read(sexOutputFileName)
+    #move Sextractor output cataloge to output products file
+    outputsFolder(output_folder_path, moveFileName=sexOutputFileName)
     return sexOutput
 
-def cutsSExOutput(output, flagLimit, fluxLimit, SNRlimit, FWHMlimit):
+def cutsSExOutput(output, flagLimit, fluxLimit, SNRlimit, FWHMlimit, output_folder_path):
 #Make cuts to data as decided by user
     #print original data object number
     print 'Number of object identified extracted by SExtractor: ', len(output)
@@ -54,6 +58,8 @@ def cutsSExOutput(output, flagLimit, fluxLimit, SNRlimit, FWHMlimit):
     #save list of data that survived the cuts to a file
     write(FWHMcut, 'SExtractor_output_after_cuts.csv')
     print'A list of the objects that survived the cuts: SExtractor_output_after_cuts.csv'
+    #move Sextractor output file to output products file
+    outputsFolder(output_folder_path ,moveFileName='SExtractor_output_after_cuts.csv')
     return FWHMcut
 
 def createHist(cutTable):

@@ -12,7 +12,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
 #Subtract overscan if overscanSubtract is true
     if overscanSubtractBOOL == bool(1):
         print "You have selected to subtract bias in your image using overscan"
-        print "LINT will now subtract the overscan from your image, and mask the overscan regions"
+        print "LINT will now subtract the overscan from your image and mask the overscan regions"
         #Convert overscan strings from config file to lists (overscanRows, overscanColumns)
         rows = array(stringToList(overscanRows))
         columns = array(stringToList(overscanColumns))

@@ -111,9 +111,9 @@ if __name__ == '__main__':
     #send the scaled/stacked/inverted image to SExtractor with the user give parameter file
     callSExtractor.sendSEImage(lintDict['fitsPath'], outputName, lintDict['SExParameterFile'])
     #read SExtractor output file, and make cuts to SExtractor output table
-    cutTable = analyzeSExOutput.cutsSExOutput(analyzeSExOutput.loadSExOutput(lintDict['SExParameterFile']),
-                                              lintDict['flagLimit'], lintDict['fluxLimit'],
-                                              lintDict['SNRlimit'], lintDict['FWHMlimit'])
+    cutTable = analyzeSExOutput.cutsSExOutput(analyzeSExOutput.loadSExOutput(lintDict['SExParameterFile'], output_folder_path),
+                                              lintDict['flagLimit'], lintDict['fluxLimit'], lintDict['SNRlimit'], 
+                                              lintDict['FWHMlimit'], output_folder_path)
     #create the histogram
     n1, bin_centers = analyzeSExOutput.createHist(cutTable)
     #create a log10 plot
