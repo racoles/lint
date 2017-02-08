@@ -24,7 +24,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         #Copy array
         arrayCopy = copy(fitsArrayTimeSubtraction)
         #Get means of overscan sections
-        for ii in range(arrayCopy.shape[0]):
+        for ii in range(arrayCopy.shape[0]): #########################################################################
             for xx in range(rows.shape[0]):
                 overscanMeanRowGroups[ii,xx] = int(arrayCopy[ii,rows[xx],:].mean())
             for yy in range(columns.shape[0]):
