@@ -3,6 +3,7 @@
 @author: Rebecca Coles
 Updated on Apr 6, 2016
 
+Makes a directory for output products and move output products into it
 Loads the flats fits files
 Saves data to a fits file
 '''
@@ -69,9 +70,9 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     outputName = s.join(seq)
     print 'Scaled/Stacked/Inverted file: ', outputName
     #create output product dir
-    new_folder_path = outputsFolder(fitsPath, newFolder)
+    output_folder_path = outputsFolder(fitsPath, newFolder)
     #save fits
     hdu = fits.PrimaryHDU(invertedImage)
-    hdu.writeto(new_folder_path, clobber=True)
-    f = open(os.path.join(new_folder_path, outputName), 'r')
-    return f.name
+    hdu.writeto(output_folder_path, clobber=True)
+    f = open(os.path.join(output_folder_path, outputName), 'r')
+    return f.name, output_folder_path
