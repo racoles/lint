@@ -37,11 +37,14 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
             folder_exist = True
             iterator = 1
             while folder_exist == True:
-                if not os.path.exists(os.path.join(output_path, todaystr, '_', iterator)):
-                   new_folder_path = os.mkdir(os.path.join(output_path, todaystr, '_', iterator))
+                output_product_folder_name = todaystr + '_' + str(iterator)
+                print output_product_folder_name
+                if not os.path.exists(os.path.join(output_path, output_product_folder_name)):
+                   new_folder_path = os.mkdir(os.path.join(output_path, output_product_folder_name))
                    folder_exist = False
                    iterator = iterator + 1
-                return new_folder_path
+            print 'New folder created for output products (in directory that contains fits files directory): ', new_folder_path
+            return new_folder_path
 #'moveFileName'
     #Just moving files, not making a dir. Here, files_path is where you want to move the files to
     elif ('moveFileName' in keyword_parameters):
@@ -70,7 +73,7 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     outputName = s.join(seq)
     print 'Scaled/Stacked/Inverted file: ', outputName
     #create output product dir
-    output_folder_path = outputsFolder(fitsPath, newFolder)
+    output_folder_path = outputsFolder(fitsPath, newFolder=True)
     #save fits
     hdu = fits.PrimaryHDU(invertedImage)
     hdu.writeto(output_folder_path, clobber=True)
