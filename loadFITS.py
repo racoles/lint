@@ -32,14 +32,18 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
         output_folder_name = 'LINT_output_' + today.isoformat()
         #Make output dir. Append # to dir name if dir already exists
         if not os.path.exists(os.path.join(output_path, output_folder_name)):  #Folder doesn't exist
-            new_folder_path = os.mkdir(os.path.join(output_path, output_folder_name))
+            os.mkdir(os.path.join(output_path, output_folder_name))
+            new_folder_path = os.path.join(output_path, output_folder_name)
+            print 'New folder created for output products (in directory that contains fits files directory): ', new_folder_path
+            return new_folder_path
         else: #Folder does exist
             folder_exist = True
             iterator = 1
             while folder_exist == True:
                 output_product_folder_name = output_folder_name + '_' + str(iterator)
                 if not os.path.exists(os.path.join(output_path, output_product_folder_name)):
-                   new_folder_path = os.mkdir(os.path.join(output_path, output_product_folder_name))
+                   os.mkdir(os.path.join(output_path, output_product_folder_name))
+                   new_folder_path = os.path.join(output_path, output_product_folder_name)
                    folder_exist = False
                 iterator += 1
             print 'New folder created for output products (in directory that contains fits files directory): ', new_folder_path
