@@ -29,12 +29,12 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
     if ('newFolder' in keyword_parameters):
         today = datetime.date.today()  # get today's date as a datetime type  
         output_path = os.path.dirname(os.path.dirname(files_path)) #Here files_path is fits files location
-        output_folder_name = 'LINT_output_' + today.isoformat()
+        output_folder_name = 'LINT_Output_' + today.isoformat()
         #Make output dir. Append # to dir name if dir already exists
         if not os.path.exists(os.path.join(output_path, output_folder_name)):  #Folder doesn't exist
             os.mkdir(os.path.join(output_path, output_folder_name))
             new_folder_path = os.path.join(output_path, output_folder_name)
-            print 'New folder created for output products (in directory that contains fits files directory): ', new_folder_path
+            print 'New folder created for output products (in the same directory that contains fits files directory): ', new_folder_path
             return new_folder_path
         else: #Folder does exist
             folder_exist = True
@@ -69,16 +69,13 @@ def openFiles(filepathsAndFileNames, ext):
 
 def saveFITS(fitsPath, invertedImage, outputFITS):
 #save an numpy array as a fits file
-    #create output folder
-    #set output file name
-    s = ''
-    seq = (outputFITS, '_scaled-stacked-inverted.fits')
-    outputName = s.join(seq)
-    print 'Scaled/Stacked/Inverted file: ', outputName
-    #create output product dir
+    #create output dir
     output_folder_path = outputsFolder(fitsPath, newFolder=True)
+    #name for output fits file
+    outputName = outputFITS + '_scaled-stacked-inverted.fits'
+    print 'Scaled/Stacked/Inverted file: ', outputName
     #save fits
     hdu = fits.PrimaryHDU(invertedImage)
-    hdu.writeto(output_folder_path, clobber=True)
-    f = open(os.path.join(output_folder_path, outputName), 'r')
+    hdu.writeto(output_folder_path + '/' + outputName, clobber=True)
+    f = open(output_folder_path + '/' + outputName, 'r')
     return f.name, output_folder_path
