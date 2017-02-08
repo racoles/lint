@@ -15,9 +15,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         print "LINT will now subtract the overscan from your image, and mask the overscan regions"
         #Convert overscan strings from config file to lists (overscanRows, overscanColumns)
         rows = array(stringToList(overscanRows))
-        print rows
         columns = array(stringToList(overscanColumns))
-        print columns
         #Initialize numpy lists of overscan rows and columns
         overscanMeanRowGroups = zeros((fitsArrayTimeSubtraction.shape[0],rows.shape[0]))
         overscanMeanColumnGroups = zeros((fitsArrayTimeSubtraction.shape[0],columns.shape[0]))

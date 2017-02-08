@@ -27,7 +27,7 @@ def loadSExOutput(parameterFile):
             if 'CATALOG_NAME' in line:
                 result = search('CATALOG_NAME(.*)#', line)
     sexOutputFileName = str.strip(result.group(1))
-    print'SExtractor output file:', sexOutputFileName  
+    print'SExtractor output file:', sexOutputFileName
     #Read SExtractor output file
     so = SExtractor()
     sexOutput = so.read(sexOutputFileName)

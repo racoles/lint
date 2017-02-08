@@ -21,4 +21,5 @@ def sendSEImage(fitsDir, outputName, parameterFile):
     print 'Talking to SExtractor'
     print 'Sending SExtractor command: ',sexCommand
     #call SExtractor and send image and parameter file
-    system(sexCommand)
+    system(sexCommand) #system waits until SExtractor is complete to contimue
+    #Move SExtractor output files

@@ -91,10 +91,12 @@ from timeSubtraction import timeSub
 
 #Load LINT.config
 lintDict = loadConfig()
+output_files_dir = outputsFolder(lintDict['fitsPath'])
 
 ################################################################################################
 
 if __name__ == '__main__':
+    #create output folder
     #perform time subtraction
     fitsArrayTimeSubtraction = timeSub(lintDict['fitsPath'], lintDict['ext']) #to perform time subtraction
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
@@ -106,7 +108,7 @@ if __name__ == '__main__':
         #invert the image to make attenuation spots appear positive to photometry code.
     invertedImage = (subtractAverageSky(scaleAndStack.stackImages(scaleAndStack.scaleToMean(fitsArrayOverscanSubtracted))))*(-1)
     #save the scaled, stacked, inverted image
-    outputName = loadFITS.saveFITS(lintDict['fitsPath'], invertedImage, lintDict['outputFITS'])
+    outputName = loadFITS.saveFITS(output_files_dir, invertedImage, lintDict['outputFITS'])
     #send the scaled/stacked/inverted image to SExtractor with the user give parameter file
     callSExtractor.sendSEImage(lintDict['fitsPath'], outputName, lintDict['SExParameterFile'])
     #read SExtractor output file, and make cuts to SExtractor output table
