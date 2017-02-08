@@ -16,7 +16,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         #Convert overscan strings from config file to lists (overscanRows, overscanColumns)
         rows = array(stringToList(overscanRows))
         columns = array(stringToList(overscanColumns))
-        #Initialize numpy lists of overscan rows and columns
+        #Initialize numpy arrays of overscan rows and columns
         overscanMeanRowGroups = zeros((fitsArrayTimeSubtraction.shape[0],rows.shape[0]))
         overscanMeanColumnGroups = zeros((fitsArrayTimeSubtraction.shape[0],columns.shape[0]))
         overscanMean = zeros((fitsArrayTimeSubtraction.shape[0]))
