@@ -35,6 +35,8 @@ def loadSExOutput(parameterFile, output_folder_path):
     sexOutput = so.read(sexOutputFileName)
     #move Sextractor output cataloge to output products file
     outputsFolder(output_folder_path, moveFileName=sexOutputFileName)
+    #move Sextractor output check image to output products file (if there is one and it has the default name)
+    outputsFolder(output_folder_path, moveFileName='check.fits')
     return sexOutput
 
 def cutsSExOutput(output, flagLimit, fluxLimit, SNRlimit, FWHMlimit, output_folder_path):
