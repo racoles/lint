@@ -28,21 +28,20 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
     #Create folder for output products named with the date
     if ('newFolder' in keyword_parameters):
         today = datetime.date.today()  # get today's date as a datetime type  
-        todaystr = today.isoformat()   # get string representation: YYYY-MM-DD from a datetime type.
         output_path = os.path.dirname(os.path.dirname(files_path)) #Here files_path is fits files location
+        output_folder_name = 'LINT_output_' + today.isoformat()
         #Make output dir. Append # to dir name if dir already exists
-        if not os.path.exists(os.path.join(output_path, todaystr)):  #Folder doesn't exist
-            new_folder_path = os.mkdir(os.path.join(output_path, todaystr))
+        if not os.path.exists(os.path.join(output_path, output_folder_name)):  #Folder doesn't exist
+            new_folder_path = os.mkdir(os.path.join(output_path, output_folder_name))
         else: #Folder does exist
             folder_exist = True
             iterator = 1
             while folder_exist == True:
-                output_product_folder_name = todaystr + '_' + str(iterator)
-                print output_product_folder_name
+                output_product_folder_name = output_folder_name + '_' + str(iterator)
                 if not os.path.exists(os.path.join(output_path, output_product_folder_name)):
                    new_folder_path = os.mkdir(os.path.join(output_path, output_product_folder_name))
                    folder_exist = False
-                   iterator = iterator + 1
+                iterator += 1
             print 'New folder created for output products (in directory that contains fits files directory): ', new_folder_path
             return new_folder_path
 #'moveFileName'
