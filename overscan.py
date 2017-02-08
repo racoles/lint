@@ -29,6 +29,8 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
                 overscanMeanRowGroups[ii,xx] = int(arrayCopy[ii,rows[xx],:].mean())
             for yy in range(columns.shape[0]):
                 overscanMeanColumnGroups[ii,yy] = int(arrayCopy[ii,:,columns[yy]].mean())
+        print overscanMeanRowGroups
+        print overscanMeanColumnGroups
         #Subtract overscans from array
         for jj in range(arrayCopy.shape[0]):
             overscanMean[jj] = (overscanMeanRowGroups[jj,:].mean() + overscanMeanColumnGroups[jj,:].mean())/2
