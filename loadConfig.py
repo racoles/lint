@@ -6,13 +6,13 @@ Updated on Nov 21, 2016
 Load variables from LINT.config and insert into dictionary
 '''
 # Import
-import os, ConfigParser
+import os, configparser
 from json import loads
 
 def loadConfig():
 #Load config.txt
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    configParser = ConfigParser.RawConfigParser()   
+    configParser = configparser.RawConfigParser()   
     configFilePath = os.path.join(__location__, 'LINT.config');
     configParser.read(configFilePath)
     #Retrieve user specifications from LINT.config and create dictionary

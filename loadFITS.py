@@ -34,7 +34,7 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
         if not os.path.exists(os.path.join(output_path, output_folder_name)):  #Folder doesn't exist
             os.mkdir(os.path.join(output_path, output_folder_name))
             new_folder_path = os.path.join(output_path, output_folder_name)
-            print 'New folder created for output products: ', new_folder_path
+            print('New folder created for output products: ', new_folder_path)
             return new_folder_path
         else: #Folder does exist
             folder_exist = True
@@ -46,7 +46,7 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
                    new_folder_path = os.path.join(output_path, output_product_folder_name)
                    folder_exist = False
                 iterator += 1
-            print 'New folder created for output products (in directory that contains fits files directory): ', new_folder_path
+            print('New folder created for output products (in directory that contains fits files directory): ', new_folder_path)
             return new_folder_path
 #'moveFileName'
     #Just moving files, not making a dir. Here, files_path is where you want to move the files to
@@ -58,8 +58,8 @@ def makeList(fileDir):
 #make a list of the files in the directory
     #setting up to list files
     filepathsAndFileNames = glob.glob(fileDir + '*')
-    print "Looking in directory: ", fileDir
-    print "FITS files in directory: ", len(filepathsAndFileNames)
+    print( "Looking in directory: ", fileDir)
+    print( "FITS files in directory: ", len(filepathsAndFileNames))
     return filepathsAndFileNames
 
 def openFiles(filepathsAndFileNames, ext):
@@ -73,7 +73,7 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     output_folder_path = outputsFolder(fitsPath, newFolder=True)
     #name for output fits file
     outputName = outputFITS + '_scaled-stacked-inverted.fits'
-    print 'Scaled/Stacked/Inverted file: ', outputName
+    print( 'Scaled/Stacked/Inverted file: ', outputName)
     #save fits
     hdu = fits.PrimaryHDU(invertedImage)
     hdu.writeto(output_folder_path + '/' + outputName, clobber=True)

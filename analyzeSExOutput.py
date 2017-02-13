@@ -29,7 +29,7 @@ def loadSExOutput(parameterFile, output_folder_path):
             if 'CATALOG_NAME' in line:
                 result = search('CATALOG_NAME(.*)#', line)
     sexOutputFileName = str.strip(result.group(1))
-    print'SExtractor output file:', sexOutputFileName
+    print('SExtractor output file:', sexOutputFileName)
     #Read SExtractor output file
     so = SExtractor()
     sexOutput = so.read(sexOutputFileName)
@@ -42,24 +42,24 @@ def loadSExOutput(parameterFile, output_folder_path):
 def cutsSExOutput(output, flagLimit, fluxLimit, SNRlimit, FWHMlimit, output_folder_path):
 #Make cuts to data as decided by user
     #print original data object number
-    print 'Number of object identified extracted by SExtractor: ', len(output)
+    print( 'Number of object identified extracted by SExtractor: ', len(output))
     #Flag cut
     cutFlags = output[logical_not(output['FLAGS'] > flagLimit)]
-    print 'Number of objects remaining after Flags cut:', len(cutFlags)
+    print( 'Number of objects remaining after Flags cut:', len(cutFlags))
     #Flux cut
     cutFlux = cutFlags[logical_not(cutFlags['FLUX_AUTO'] < fluxLimit)]
-    print 'Number of objects remaining after Flux cut:', len(cutFlux)
+    print( 'Number of objects remaining after Flux cut:', len(cutFlux))
     #SNR cut
     SNRcut = cutFlux[logical_not((cutFlux['FLUX_AUTO']/cutFlux['FLUXERR_AUTO']) < SNRlimit)]
-    print 'Number of objects remaining after SNR cut:', len(SNRcut)
+    print( 'Number of objects remaining after SNR cut:', len(SNRcut))
     #FWHM cut
     FWHMcut = SNRcut[logical_not(SNRcut['FWHM_IMAGE'] < FWHMlimit)]
-    print 'Number of objects remaining after FWHM cut:', len(FWHMcut)
+    print( 'Number of objects remaining after FWHM cut:', len(FWHMcut))
     #print number of remaining objects
-    print 'Number of objects remaining after all cuts: ', len(FWHMcut)
+    print( 'Number of objects remaining after all cuts: ', len(FWHMcut))
     #save list of data that survived the cuts to a file
     write(FWHMcut, 'SExtractor_output_after_cuts.csv')
-    print'A list of the objects that survived the cuts: SExtractor_output_after_cuts.csv'
+    print('A list of the objects that survived the cuts: SExtractor_output_after_cuts.csv')
     #move Sextractor output file to output products file
     outputsFolder(output_folder_path ,moveFileName='SExtractor_output_after_cuts.csv')
     return FWHMcut
@@ -92,7 +92,7 @@ def createHist(cutTable, output_folder_path):
     fig.savefig('hist.png')
     # Move hist to output folder
     outputsFolder(output_folder_path ,moveFileName='hist.png')
-    print 'Histogram saved to: ', output_folder_path
+    print( 'Histogram saved to: ', output_folder_path)
     return n1, bin_centers
     
 def logPlot(n1, bin_centers, output_folder_path):
@@ -119,4 +119,4 @@ def logPlot(n1, bin_centers, output_folder_path):
     fig.savefig('logplot.png')
     # Move logplot to output folder
     outputsFolder(output_folder_path ,moveFileName='logplot.png')
-    print 'Logplot saved to: ', output_folder_path
+    print( 'Logplot saved to: ', output_folder_path)

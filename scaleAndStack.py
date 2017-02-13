@@ -29,8 +29,8 @@ def scaleToMean(fitsArrayOverscan):
     baseline=mean(fitsArrayOverscan)
     #find the means of the individual images
     meansOfImages=[mean(x) for x in fitsArrayOverscan]
-    print 'Means of images: ',meansOfImages
-    print 'Baseline for scale: ',baseline
+    print( 'Means of images: ',meansOfImages)
+    print( 'Baseline for scale: ',baseline)
     #get the scale factor list
     scaleFactorList = meansOfImages - baseline
     #scale images
@@ -40,5 +40,5 @@ def scaleToMean(fitsArrayOverscan):
 def stackImages(scaledImages):
 #Stack the images into a single skyflat by median
     medianStack = median(scaledImages, axis=0)
-    print 'Scaled/Stacked/Inverted image dimensions (xpixels, ypixels):', medianStack.shape
+    print( 'Scaled/Stacked/Inverted image dimensions (xpixels, ypixels):', medianStack.shape)
     return medianStack

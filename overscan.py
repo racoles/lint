@@ -14,8 +14,8 @@ from astropy.io import fits
 def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsArrayTimeSubtraction):
 #Subtract overscan if overscanSubtract is true
     if overscanSubtractBOOL == bool(1):
-        print "You have selected to subtract bias in your image using overscan"
-        print "LINT will now subtract the overscan from your image and mask the overscan regions"
+        print( "You have selected to subtract bias in your image using overscan")
+        print( "LINT will now subtract the overscan from your image and mask the overscan regions")
         #Convert overscan strings from config file to lists (overscanRows, overscanColumns)
         rows = array(stringToList(overscanRows))
         columns = array(stringToList(overscanColumns))
@@ -48,14 +48,14 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
                 overscanMean[ll] = overscanMeanRowGroups[ll,:].mean()
                 subtractedArray[ll] = arrayCopy[jj,:,:] - overscanMean[ll]
         else:
-            print 'Something went wrong with your overscan subtraction. Check LINT.config to see if you entered your overscan rows and/or columns correctly.'
+            print( 'Something went wrong with your overscan subtraction. Check LINT.config to see if you entered your overscan rows and/or columns correctly.')
             return arrayCopy
         #Numpy delete overscan Rows (axis = 1)
         subtractedAndRemoved = delete(subtractedArray,rows,1)
         #Numpy delete overscan Columns (axis = 2)
         subtractedAndRemoved = delete(subtractedAndRemoved,columns,2)
         #Return overscan subtracted array
-        print "Overscan subtraction and masking complete"
+        print( "Overscan subtraction and masking complete")
         return subtractedAndRemoved
     else:
         return fitsArrayTimeSubtraction

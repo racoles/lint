@@ -18,14 +18,14 @@ The code will:
     -Batch process data to show the accumulation of debris over time.
 
 Programs, packages, and wrappers:
-    Interpreter: python 2.7
+    Interpreter: python 3
     PyDev: 4.5.5.201603221110
     Numpy: 1.11.0
-    Astropy: 1.1.2
+    Astropy: 1.1.1-3
     Python-dev: python-dev 2.7.5-5ubuntu3
     Eclipse: eclipse-platform 3.8.1-5.1
     SExtractor: 2.19.5-2
-    Matplotlib: 1.3.1-1ubuntu5
+    Matplotlib: 1.5.1-1ubuntu1
     
 Modules:
     testAstro: 
