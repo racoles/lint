@@ -87,11 +87,12 @@ def createHist(cutTable, output_folder_path):
                     xytext=(0, -18), textcoords='offset points', va='top', ha='center')
     # Give ourselves some more room at the bottom of the plot
     plt.subplots_adjust(bottom=.15)
-    plt.show()
     # Save histogram to file
+    #plt.show()
     fig.savefig('hist.png')
     # Move hist to output folder
     outputsFolder(output_folder_path ,moveFileName='hist.png')
+    print 'Histogram saved to: ', output_folder_path
     return n1, bin_centers
     
 def logPlot(n1, bin_centers, output_folder_path):
@@ -113,8 +114,9 @@ def logPlot(n1, bin_centers, output_folder_path):
     plt.xlabel('Areas of Dust Spot (square pixels)', labelpad=20)
     plt.ylabel('Log10 Number of Dust Spots')
     plt.title('Areas of Dust Spot versus Log10 Number of Dust Spots')
-    plt.show()
     # Save plot to file
+    #plt.show()
     fig.savefig('logplot.png')
     # Move logplot to output folder
     outputsFolder(output_folder_path ,moveFileName='logplot.png')
+    print 'Logplot saved to: ', output_folder_path
