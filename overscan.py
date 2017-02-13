@@ -8,6 +8,9 @@ Subtract and remove overscan if overscanSubtractBOOL bool is true
 '''
 # Import
 from numpy import delete, copy, zeros, array
+
+from astropy.io import fits
+
 def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsArrayTimeSubtraction):
 #Subtract overscan if overscanSubtract is true
     if overscanSubtractBOOL == bool(1):
@@ -29,8 +32,6 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
                 overscanMeanRowGroups[ii,xx] = int(arrayCopy[ii,rows[xx],:].mean())
             for yy in range(columns.shape[0]):
                 overscanMeanColumnGroups[ii,yy] = int(arrayCopy[ii,:,columns[yy]].mean())
-        print overscanMeanRowGroups
-        print overscanMeanColumnGroups
         #Subtract overscans from array
         for jj in range(arrayCopy.shape[0]):
             overscanMean[jj] = (overscanMeanRowGroups[jj,:].mean() + overscanMeanColumnGroups[jj,:].mean())/2
