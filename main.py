@@ -115,6 +115,6 @@ if __name__ == '__main__':
                                               lintDict['flagLimit'], lintDict['fluxLimit'], lintDict['SNRlimit'], 
                                               lintDict['FWHMlimit'], output_folder_path)
     #create the histogram
-    n1, bin_centers = analyzeSExOutput.createHist(cutTable)
+    n1, bin_centers = analyzeSExOutput.createHist(cutTable, output_folder_path)
     #create a log10 plot
-    logNPlot = analyzeSExOutput.logPlot(n1, bin_centers)
+    logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)

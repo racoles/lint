@@ -64,7 +64,7 @@ def cutsSExOutput(output, flagLimit, fluxLimit, SNRlimit, FWHMlimit, output_fold
     outputsFolder(output_folder_path ,moveFileName='SExtractor_output_after_cuts.csv')
     return FWHMcut
 
-def createHist(cutTable):
+def createHist(cutTable, output_folder_path):
 #Creates histograms from the SExtracted data
     #Computed obscured area by calculating pi*A*B, the product of semi-major times semi-minor axes.
     #These variables are referred to as A_IMAGE and B_IMAGE
@@ -88,9 +88,13 @@ def createHist(cutTable):
     # Give ourselves some more room at the bottom of the plot
     plt.subplots_adjust(bottom=.15)
     plt.show()
+    # Save histogram to file
+    fig.savefig('hist.png')
+    # Move hist to output folder
+    outputsFolder(output_folder_path ,moveFileName='hist.png')
     return n1, bin_centers
     
-def logPlot(n1, bin_centers):
+def logPlot(n1, bin_centers, output_folder_path):
 #Hists typically look like a power law, where number of spots between A and A+dA scales as (spot area)^(-n).
     #remove zeros from n1
         #first combine lists
@@ -110,3 +114,7 @@ def logPlot(n1, bin_centers):
     plt.ylabel('Log10 Number of Dust Spots')
     plt.title('Areas of Dust Spot versus Log10 Number of Dust Spots')
     plt.show()
+    # Save plot to file
+    fig.savefig('logplot.png')
+    # Move logplot to output folder
+    outputsFolder(output_folder_path ,moveFileName='logplot.png')
