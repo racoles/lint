@@ -34,10 +34,6 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
             if columns.all() == True: #only proceed if columns is not empty ([0])
                 for yy in range(columns.shape[0]):
                     overscanMeanColumnGroups[ii,yy] = int(arrayCopy[ii,:,columns[yy]].mean())
-        print 'rows'
-        print rows.all()
-        print 'columns'
-        print columns.all()
         #Subtract overscans from array
         if (rows.all() == True) and (columns.all() == True): #rows and columns are not empty
             for jj in range(arrayCopy.shape[0]):
