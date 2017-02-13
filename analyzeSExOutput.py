@@ -108,7 +108,7 @@ def logPlot(n1, bin_centers, output_folder_path):
     #add text with the fit function to the plot
     fit = polyfit(no_zeros[:,0], log10(no_zeros[:,1]),1)
     text = "y = %1.3f x + %1.3f" % (fit[0], fit[1])
-    plt.text(0.2, 1, text, ha='center', va='center', transform=ax.transAxes)
+    plt.text(0.17, 0.95, text, ha='center', va='center', transform=ax.transAxes)
     #plot best fit line
     plt.plot(no_zeros[:,0], poly1d(polyfit(no_zeros[:,0], log10(no_zeros[:,1]), 1))(no_zeros[:,0]),'r')
     plt.xlabel('Areas of Dust Spot (square pixels)', labelpad=20)
