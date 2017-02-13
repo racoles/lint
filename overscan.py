@@ -28,14 +28,32 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         arrayCopy = copy(fitsArrayTimeSubtraction)
         #Get means of overscan sections
         for ii in range(arrayCopy.shape[0]): #########################################################################
-            for xx in range(rows.shape[0]):
-                overscanMeanRowGroups[ii,xx] = int(arrayCopy[ii,rows[xx],:].mean())
-            for yy in range(columns.shape[0]):
-                overscanMeanColumnGroups[ii,yy] = int(arrayCopy[ii,:,columns[yy]].mean())
+            if rows.all() == True: #only proceed if rows is not empty ([0])
+                for xx in range(rows.shape[0]):
+                    overscanMeanRowGroups[ii,xx] = int(arrayCopy[ii,rows[xx],:].mean())
+            if columns.all() == True: #only proceed if columns is not empty ([0])
+                for yy in range(columns.shape[0]):
+                    overscanMeanColumnGroups[ii,yy] = int(arrayCopy[ii,:,columns[yy]].mean())
+        print 'rows'
+        print rows.all()
+        print 'columns'
+        print columns.all()
         #Subtract overscans from array
-        for jj in range(arrayCopy.shape[0]):
-            overscanMean[jj] = (overscanMeanRowGroups[jj,:].mean() + overscanMeanColumnGroups[jj,:].mean())/2
-            subtractedArray[jj] = arrayCopy[jj,:,:] - overscanMean[jj]
+        if (rows.all() == True) and (columns.all() == True): #rows and columns are not empty
+            for jj in range(arrayCopy.shape[0]):
+                overscanMean[jj] = (overscanMeanRowGroups[jj,:].mean() + overscanMeanColumnGroups[jj,:].mean())/2
+                subtractedArray[jj] = arrayCopy[jj,:,:] - overscanMean[jj]
+        elif (rows.all() == False) and (columns.all() == True):#rows empty
+            for kk in range(arrayCopy.shape[0]):
+                overscanMean[kk] = overscanMeanColumnGroups[kk,:].mean()
+                subtractedArray[kk] = arrayCopy[kk,:,:] - overscanMean[kk]
+        elif (rows.all() == True) and (columns.all() == False):#columns empty
+            for ll in range(arrayCopy.shape[0]):
+                overscanMean[ll] = overscanMeanRowGroups[ll,:].mean()
+                subtractedArray[ll] = arrayCopy[jj,:,:] - overscanMean[ll]
+        else:
+            print 'Something went wrong with your overscan subtraction. Check LINT.config to see if you entered your overscan rows and/or columns correctly.'
+            return arrayCopy
         #Numpy delete overscan Rows (axis = 1)
         subtractedAndRemoved = delete(subtractedArray,rows,1)
         #Numpy delete overscan Columns (axis = 2)

@@ -34,7 +34,7 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
         if not os.path.exists(os.path.join(output_path, output_folder_name)):  #Folder doesn't exist
             os.mkdir(os.path.join(output_path, output_folder_name))
             new_folder_path = os.path.join(output_path, output_folder_name)
-            print 'New folder created for output products (in the same directory that contains fits files directory): ', new_folder_path
+            print 'New folder created for output products: ', new_folder_path
             return new_folder_path
         else: #Folder does exist
             folder_exist = True

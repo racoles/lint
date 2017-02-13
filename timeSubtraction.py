@@ -17,8 +17,7 @@ def timeSub(fileDir, ext):
     #convert to 3D numpy array
     numpyArray = array(files)
     #subtract the last file from all of the preceding ones
-    timeSubtracted = numpyArray - numpyArray[numpyArray.shape[0]-1,:,:]
+    #timeSubtracted = numpyArray - numpyArray[numpyArray.shape[0]-1,:,:]
     #delete the fits that was used for the subtraction
-    lastFITSRemoved = delete(timeSubtracted,timeSubtracted.shape[0]-1,0)
-    #print timeSubtracted[timeSubtracted.shape[0]-1,:,:]
-    return lastFITSRemoved
+    #lastFITSRemoved = delete(timeSubtracted,timeSubtracted.shape[0]-1,0)
+    return numpyArray
