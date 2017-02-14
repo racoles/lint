@@ -77,6 +77,6 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     print( 'Scaled/Stacked/Inverted file: ', outputName)
     #save fits
     hdu = fits.PrimaryHDU(invertedImage)
-    hdu.writeto(output_folder_path + '/' + outputName, clobber=True)
+    hdu.writeto(output_folder_path + '/' + outputName, overwrite=True)
     f = open(output_folder_path + '/' + outputName, 'r')
     return f.name, output_folder_path
