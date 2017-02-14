@@ -7,8 +7,7 @@ Subtract and remove overscan if overscanSubtractBOOL bool is true
 
 '''
 # Import
-from numpy import delete, copy, zeros, array
-
+from numpy import delete, copy, zeros, array, mean
 from astropy.io import fits
 
 def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsArrayTimeSubtraction):
@@ -46,7 +45,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         elif (rows.all() == True) and (columns.all() == False):#columns empty
             for ll in range(arrayCopy.shape[0]):
                 overscanMean[ll] = overscanMeanRowGroups[ll,:].mean()
-                subtractedArray[ll] = arrayCopy[jj,:,:] - overscanMean[ll]
+                subtractedArray[ll] = arrayCopy[ll,:,:] - overscanMean[ll]
         else:
             print( 'Something went wrong with your overscan subtraction. Check LINT.config to see if you entered your overscan rows and/or columns correctly.')
             return arrayCopy
@@ -58,8 +57,7 @@ def subtractOverscan(overscanSubtractBOOL, overscanRows, overscanColumns, fitsAr
         print( "Overscan subtraction and masking complete")
         return subtractedAndRemoved
     else:
-        return fitsArrayTimeSubtraction
-    
+        return fitsArrayTimeSubtraction 
     
 def stringToList(x):
 #Convert overscan strings from config file to lists (overscanRows, overscanColumns)

@@ -63,8 +63,9 @@ def makeList(fileDir):
     return filepathsAndFileNames
 
 def openFiles(filepathsAndFileNames, ext):
-#load the fits file image data into a list (3D array) 
+#load the fits file image data into a list (3D array)
     fitsImages = [fits.getdata(image, ext) for image in filepathsAndFileNames]
+    #print('Unknown Compression. LINT accepts files of types: fits, fits.fz')
     return fitsImages
 
 def saveFITS(fitsPath, invertedImage, outputFITS):

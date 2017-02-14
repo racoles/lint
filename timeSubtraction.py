@@ -7,7 +7,7 @@ Subtract a fits file from a later exposure to remove artifacts.
 '''
 # Import
 from loadFITS import makeList, openFiles
-from numpy import delete, array
+from numpy import delete, empty, array
 
 def timeSub(fileDir, ext):
 #Subtract a fits file from a later exposure to remove artifacts.
@@ -16,6 +16,7 @@ def timeSub(fileDir, ext):
     files = openFiles(filepathsAndFileNames, ext)
     #convert to 3D numpy array
     numpyArray = array(files)
+    #print('Fits files were converted to a numpy array of shape: ', numpyArray.shape)
     #subtract the last file from all of the preceding ones
     #timeSubtracted = numpyArray - numpyArray[numpyArray.shape[0]-1,:,:]
     #delete the fits that was used for the subtraction
