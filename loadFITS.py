@@ -11,6 +11,7 @@ Saves data to a fits file
 import glob, os, time, datetime
 from astropy.io import fits
 from loadConfig import loadConfig
+from numpy import zeros, delete
 
 def outputsFolder(files_path, *default_parameters, **keyword_parameters):
 #make a directory for output products and move output products into it
@@ -81,15 +82,26 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     f = open(output_folder_path + '/' + outputName, 'r')
     return f.name, output_folder_path
 
-def imageSizeTest(fitsImages):
+def imageDimensionTest(fitsImages):
 #Scan the images in the array to insure that they are all the same size dimensionally.
 #If an image is not the proper size, it will be removed from the array.
 #The first image in the array will be used to set the standard size.
     #get dimensions of first image
     dimensions = [len(fitsImages[0]),len(fitsImages[0][0])]
+    badImageRow = zeros(1)
+    badImageCol = zeros(1)
     print('LINT will now make sure that all of the flat images have the same dimensions.')
-    print('Dimension of first image is: ', dimensions)
     print('Removing all images that do not have dimensions: ', dimensions)
     #check dimensions
     for ii in range(len(fitsImages)-1):
+        if len(fitsImages[ii][0]) != dimensions[0]:
+            badImageRow.append(ii)
+        if len(fitsImages[ii][0][0]) != dimensions[1]:
+            badImageCol.append(ii)
+    #remove images that do not meet the specified dimensions
+    imagesToBeRemoved = badImageRow + list(set(badImageCol) - set(badImageRow))
+    passedDimensionsTest = delete(fitsImages,imagesToBeRemoved, axis=0)
+    print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
+    return passedDimensionsTest
+    
         
