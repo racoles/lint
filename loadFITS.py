@@ -80,3 +80,16 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     hdu.writeto(output_folder_path + '/' + outputName, overwrite=True)
     f = open(output_folder_path + '/' + outputName, 'r')
     return f.name, output_folder_path
+
+def imageSizeTest(fitsImages):
+#Scan the images in the array to insure that they are all the same size dimensionally.
+#If an image is not the proper size, it will be removed from the array.
+#The first image in the array will be used to set the standard size.
+    #get dimensions of first image
+    dimensions = [len(fitsImages[0]),len(fitsImages[0][0])]
+    print('LINT will now make sure that all of the flat images have the same dimensions.')
+    print('Dimension of first image is: ', dimensions)
+    print('Removing all images that do not have dimensions: ', dimensions)
+    #check dimensions
+    for ii in range(len(fitsImages)-1):
+        
