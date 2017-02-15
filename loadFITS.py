@@ -11,7 +11,7 @@ Saves data to a fits file
 import glob, os, time, datetime
 from astropy.io import fits
 from loadConfig import loadConfig
-from numpy import zeros, delete
+from numpy import zeros, empty
 
 def outputsFolder(files_path, *default_parameters, **keyword_parameters):
 #make a directory for output products and move output products into it
@@ -67,7 +67,7 @@ def openFiles(filepathsAndFileNames, ext):
 #load the fits file image data into a list (3D array)
     fitsImages = [fits.getdata(image, ext) for image in filepathsAndFileNames]
     #print('Unknown Compression. LINT accepts files of types: fits, fits.fz')
-    return fitsImages
+    return imageDimensionTest(fitsImages)
 
 def saveFITS(fitsPath, invertedImage, outputFITS):
 #save an numpy array as a fits file
@@ -88,8 +88,8 @@ def imageDimensionTest(fitsImages):
 #The first image in the array will be used to set the standard size.
     #get dimensions of first image
     dimensions = [len(fitsImages[0]),len(fitsImages[0][0])]
-    badImageRow = zeros(1)
-    badImageCol = zeros(1)
+    badImageRow = empty([1])
+    badImageCol = empty([1])
     print('LINT will now make sure that all of the flat images have the same dimensions.')
     print('Removing all images that do not have dimensions: ', dimensions)
     #check dimensions
@@ -99,9 +99,20 @@ def imageDimensionTest(fitsImages):
         if len(fitsImages[ii][0][0]) != dimensions[1]:
             badImageCol.append(ii)
     #remove images that do not meet the specified dimensions
-    imagesToBeRemoved = badImageRow + list(set(badImageCol) - set(badImageRow))
-    passedDimensionsTest = delete(fitsImages,imagesToBeRemoved, axis=0)
-    print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
-    return passedDimensionsTest
+    if badImageRow.shape[0] > 1 and badImageCol.shape[0] >1: 
+    #there are images that have bad number of rows and images that have bad number of columns
+        imagesToBeRemoved = badImageRow + list(set(badImageCol) - set(badImageRow))
+        passedDimensionsTest = delete(fitsImages,imagesToBeRemoved, axis=0)
+        print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
+        return passedDimensionsTest
+    elif badImageRow.shape[0] > 1 and badImageCol.shape[0] == 1:
+        print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
+        return passedDimensionsTest
+    elif badImageRow.shape[0] == 1 and badImageCol.shape[0] > 1:
+        print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
+        return passedDimensionsTest
+    else:
+        print ('Error: dimension test failed')
+        return fitsImages
     
         
