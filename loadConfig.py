@@ -17,6 +17,8 @@ def loadConfig():
     configParser.read(configFilePath)
     #Retrieve user specifications from LINT.config and create dictionary
     lintDict = {'fitsPath': configParser.get('fitsDir', 'fitsPath'),
+                'rows': int(configParser.get('dimensions', 'rows')),  
+                'columns': int(configParser.get('dimensions', 'columns')),                
                 'ext': int(configParser.get('extension', 'ext')),
                 'outputFITS': configParser.get('output', 'outputFITS'),
                 'overscanSubtractBOOL': bool(configParser.get('overscan', 'overscanSubtractBOOL')), 
