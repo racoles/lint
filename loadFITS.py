@@ -82,17 +82,23 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     f = open(output_folder_path + '/' + outputName, 'r')
     return f.name, output_folder_path
 
-def imageDimensionTest(rows, columns, filepathsAndFileNames, fitsImages):
+def imageDimensionTest(rows, columns, filepathsAndFileNames, fitsImages, ext):
 #Scan the images in the array to insure that they are all the same size dimensionally.
 #If an image is not the proper size, it will be removed from the array.
 #The first image in the array will be used to set the standard size.
     #get dimensions from first image
     dimensions = [rows, columns]
+    badSizeList = []
     print('LINT will now make sure that all of the flat images have the same dimensions.')
+    print('The preferred dimensions of the images (as specified in the LINT.config file): ', rows, 'rows by', columns, 'columns')
     #check dimensions
-    for ii in range(len(filepathsAndFileNames))
-
-
+    for ii in range(len(filepathsAndFileNames)):
+        testImage = fits.getdata(filepathsAndFileNames[ii], ext)
+        #test rows
+        if testImage.shape[0] != rows:
+            badSizeList.append(filepathsAndFileNames[ii])
+        #test columns
+        if testImage.shape[1] != columns:
 
 '''def imageDimensionTest(fitsImages):
 #Scan the images in the array to insure that they are all the same size dimensionally.
