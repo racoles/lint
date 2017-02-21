@@ -88,7 +88,7 @@ def createHist(cutTable, output_folder_path):
     # Give ourselves some more room at the bottom of the plot
     plt.subplots_adjust(bottom=.15)
     # Save histogram to file
-    #plt.show()
+    fig.set_size_inches(18.5, 10.5)
     fig.savefig('hist.png')
     # Move hist to output folder
     outputsFolder(output_folder_path ,moveFileName='hist.png')
