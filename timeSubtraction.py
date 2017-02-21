@@ -9,7 +9,7 @@ Subtract a fits file from a later exposure to remove artifacts.
 from loadFITS import makeList, openFiles
 from numpy import delete, empty, array
 
-def timeSub(fileDir, ext):
+def timeSub(fileDir, ext, rows, columns):
 #Subtract a fits file from a later exposure to remove artifacts.
     #load the fits file image data into a list (3D array)
     filepathsAndFileNames = makeList(fileDir)     

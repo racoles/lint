@@ -12,6 +12,7 @@ import glob, os, time, datetime
 from astropy.io import fits
 from loadConfig import loadConfig
 from numpy import zeros, empty, append
+from sys import exit
 
 def outputsFolder(files_path, *default_parameters, **keyword_parameters):
 #make a directory for output products and move output products into it
@@ -63,8 +64,11 @@ def makeList(fileDir):
     print( "FITS files in directory: ", len(filepathsAndFileNames))
     return filepathsAndFileNames
 
-def openFiles(filepathsAndFileNames, ext):
+def openFiles(filepathsAndFileNames, ext, rows, columns):
 #load the fits file image data into a list (3D array)
+    #test the dimensions of the images in the directory
+    imageDimensionTest(rows, columns, filepathsAndFileNames, ext)
+    #load files
     fitsImages = [fits.getdata(image, ext) for image in filepathsAndFileNames]
     #print('Unknown Compression. LINT accepts files of types: fits, fits.fz')
     return imageDimensionTest(fitsImages)
@@ -82,13 +86,13 @@ def saveFITS(fitsPath, invertedImage, outputFITS):
     f = open(output_folder_path + '/' + outputName, 'r')
     return f.name, output_folder_path
 
-def imageDimensionTest(rows, columns, filepathsAndFileNames, fitsImages, ext):
+def imageDimensionTest(rows, columns, filepathsAndFileNames, ext):
 #Scan the images in the array to insure that they are all the same size dimensionally.
 #If an image is not the proper size, it will be removed from the array.
 #The first image in the array will be used to set the standard size.
     #get dimensions from first image
     dimensions = [rows, columns]
-    badSizeList = []
+    badSize = []
     print('LINT will now make sure that all of the flat images have the same dimensions.')
     print('The preferred dimensions of the images (as specified in the LINT.config file): ', rows, 'rows by', columns, 'columns')
     #check dimensions
@@ -96,41 +100,16 @@ def imageDimensionTest(rows, columns, filepathsAndFileNames, fitsImages, ext):
         testImage = fits.getdata(filepathsAndFileNames[ii], ext)
         #test rows
         if testImage.shape[0] != rows:
-            badSizeList.append(filepathsAndFileNames[ii])
+            badSize.append(filepathsAndFileNames[ii])
+            continue
         #test columns
         if testImage.shape[1] != columns:
-
-'''def imageDimensionTest(fitsImages):
-#Scan the images in the array to insure that they are all the same size dimensionally.
-#If an image is not the proper size, it will be removed from the array.
-#The first image in the array will be used to set the standard size.
-    #get dimensions of first image
-    dimensions = [len(fitsImages[0]),len(fitsImages[0][0])]
-    badImageRow = []
-    badImageCol = []
-    print('LINT will now make sure that all of the flat images have the same dimensions.')
-    print('Removing all images that do not have dimensions: ', dimensions)
-    #check dimensions
-    for ii in range(len(fitsImages)-1):
-        if len(fitsImages[ii][0]) != dimensions[0]:
-            badImageRow.append(ii)
-        if len(fitsImages[ii][0][0]) != dimensions[1]:
-            badImageCol.append(ii)
-    #remove images that do not meet the specified dimensions
-    if badImageRow.shape[0] > 1 and badImageCol.shape[0] >1: 
-    #there are images that have bad number of rows and images that have bad number of columns
-        imagesToBeRemoved = badImageRow + list(set(badImageCol) - set(badImageRow))
-        passedDimensionsTest = delete(fitsImages,imagesToBeRemoved, axis=0)
-        print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
-        return passedDimensionsTest
-    elif badImageRow.shape[0] > 1 and badImageCol.shape[0] == 1:
-        print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
-        return passedDimensionsTest
-    elif badImageRow.shape[0] == 1 and badImageCol.shape[0] > 1:
-        print ('Number of images that passed the dimension test: ', len(passedDimensionsTest), '/', len(fitsImages))
-        return passedDimensionsTest
+            badSize.append(filepathsAndFileNames[ii])
+        testImage = None
+    #If there are any images with inappropriate sizes, LINT will list them and the program will exit.
+    if not badSize:
+        print('All images have dimensions (', rows, ',', columns, ')')
     else:
-        print ('Error: dimension test failed')
-        return fitsImages
-    
-        
+        print('Some images do not have the proper dimensions. Please remove these images and restart LINT:')
+        print(badSize)
+        exit('Error: Images present that do not fit the row and column dimensions specified in LINT.config')
