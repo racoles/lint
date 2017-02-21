@@ -11,7 +11,7 @@ Saves data to a fits file
 import glob, os, time, datetime
 from astropy.io import fits
 from loadConfig import loadConfig
-from numpy import zeros, empty, append
+from numpy import zeros, empty, append, array
 from sys import exit
 
 def outputsFolder(files_path, *default_parameters, **keyword_parameters):
@@ -70,8 +70,9 @@ def openFiles(filepathsAndFileNames, ext, rows, columns):
     imageDimensionTest(rows, columns, filepathsAndFileNames, ext)
     #load files
     fitsImages = [fits.getdata(image, ext) for image in filepathsAndFileNames]
-    #print('Unknown Compression. LINT accepts files of types: fits, fits.fz')
-    return fitsImages
+    #convert to 3D numpy array
+    numpyArray = array(fitsImages)
+    return numpyArray
 
 def saveFITS(fitsPath, invertedImage, outputFITS):
 #save an numpy array as a fits file

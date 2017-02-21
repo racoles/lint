@@ -95,12 +95,9 @@ lintDict = loadConfig()
 ################################################################################################
 
 if __name__ == '__main__':
-    #create output folder
-    #perform time subtraction
-    fitsArrayTimeSubtraction = timeSub(lintDict['fitsPath'], lintDict['ext'], lintDict['rows'], lintDict['columns']) #to perform time subtraction
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
     fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
-                                                   lintDict['overscanColumns'], fitsArrayTimeSubtraction)
+                                                   lintDict['overscanColumns'], loadFITS.openFiles(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'], lintDict['rows'], lintDict['columns']))
     #prepare the image for analysis
         #scale and stack images.
         #subtract the average sky value from the image. 
