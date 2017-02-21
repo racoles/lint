@@ -16,7 +16,6 @@ def timeSub(fileDir, ext, rows, columns):
     files = openFiles(filepathsAndFileNames, ext, rows, columns)
     #convert to 3D numpy array
     numpyArray = array(files)
-    print (numpyArray)
     #print('Fits files were converted to a numpy array of shape: ', numpyArray.shape)
     #subtract the last file from all of the preceding ones
     #timeSubtracted = numpyArray - numpyArray[numpyArray.shape[0]-1,:,:]

@@ -111,7 +111,7 @@ def logPlot(n1, bin_centers, output_folder_path):
     plt.text(0.17, 0.95, text, ha='center', va='center', transform=ax.transAxes)
     #plot best fit line
     plt.plot(no_zeros[:,0], poly1d(polyfit(no_zeros[:,0], log10(no_zeros[:,1]), 1))(no_zeros[:,0]),'r')
-    plt.xlabel('Areas of Dust Spot (square pixels)', labelpad=20)
+    plt.xlabel('Areas of Dust Spot (square pixels)', labelpad=10)
     plt.ylabel('Log10 Number of Dust Spots')
     plt.title('Areas of Dust Spot versus Log10 Number of Dust Spots')
     # Save plot to file
