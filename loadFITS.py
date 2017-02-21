@@ -71,7 +71,7 @@ def openFiles(filepathsAndFileNames, ext, rows, columns):
     #load files
     fitsImages = [fits.getdata(image, ext) for image in filepathsAndFileNames]
     #print('Unknown Compression. LINT accepts files of types: fits, fits.fz')
-    return imageDimensionTest(fitsImages)
+    return fitsImages
 
 def saveFITS(fitsPath, invertedImage, outputFITS):
 #save an numpy array as a fits file

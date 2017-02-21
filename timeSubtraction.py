@@ -13,7 +13,7 @@ def timeSub(fileDir, ext, rows, columns):
 #Subtract a fits file from a later exposure to remove artifacts.
     #load the fits file image data into a list (3D array)
     filepathsAndFileNames = makeList(fileDir)     
-    files = openFiles(filepathsAndFileNames, ext)
+    files = openFiles(filepathsAndFileNames, ext, rows, columns)
     #convert to 3D numpy array
     numpyArray = array(files)
     #print('Fits files were converted to a numpy array of shape: ', numpyArray.shape)
