@@ -95,7 +95,7 @@ def imageDimensionTest(rows, columns, filepathsAndFileNames, ext):
     dimensions = [rows, columns]
     badSize = []
     print('LINT will now make sure that all of the flat images have the same dimensions.')
-    print('The preferred dimensions of the images (as specified in the LINT.config file): ', rows, 'rows by', columns, 'columns')
+    print('The preferred dimensions of the images (as specified in the LINT.config file): ', rows, 'rows x ', columns, 'columns')
     #check dimensions
     for ii in range(len(filepathsAndFileNames)):
         testImage = fits.getdata(filepathsAndFileNames[ii], ext)
