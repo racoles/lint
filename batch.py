@@ -22,11 +22,11 @@ def autoGroup(filepathsAndFileNames, ext, date):
     hdulist = [fits.open(image, ext) for image in filepathsAndFileNames]
     #Create list to assocate the fits file with the date that it was imaged
     for ii in range(len(filepathsAndFileNames))
-        dateList[ii] = [filepathsAndFileNames[ii] , hdulist[ii][ext].header[date]]
+        dateList[ii] = [ii, filepathsAndFileNames[ii] , hdulist[ii][ext].header[date]]
     print(datelist)
 
 def timePlot():
 #Plot the debris accumulation over time as: hist
 #X axis: time
 #Y axis: debris
-#timePlot uses autogroup's datelist to arrange data by date
+    #timePlot uses autogroup's datelist to arrange data by date
