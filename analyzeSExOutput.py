@@ -114,6 +114,8 @@ def logPlot(n1, bin_centers, output_folder_path):
     plt.xlabel('Areas of Dust Spot (square pixels)', labelpad=10)
     plt.ylabel('Log10 Number of Dust Spots')
     plt.title('Areas of Dust Spot versus Log10 Number of Dust Spots')
+    plt.gca().set_ylim(bottom=0)
+    plt.gca().set_xlim(left=0)
     # Save plot to file
     #plt.show()
     fig.savefig('logplot.png')

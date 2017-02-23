@@ -22,7 +22,7 @@ def autoGroup(filepathsAndFileNames, ext, date):
     hdulist = [fits.open(image, ext) for image in filepathsAndFileNames]
     #Create list to assocate the fits file with the date that it was imaged
     for ii in range(len(filepathsAndFileNames))
-        datelist[ii] = [filepathsAndFileNames[ii] , hdulist[ii][ext].header[date]]
+        dateList[ii] = [filepathsAndFileNames[ii] , hdulist[ii][ext].header[date]]
     print(datelist)
 
 def timePlot():
