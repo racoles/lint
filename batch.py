@@ -15,8 +15,7 @@ timePlot:
     Y axis: debris
 '''
 # Import
-import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput
-from datetime import strptime
+import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput, datetime
 from loadConfig import loadConfig
 from overscan import subtractOverscan
 from skyValue import subtractAverageSky
@@ -30,12 +29,15 @@ def autoGroup(filepathsAndFileNames, ext):
     hdulist = [fits.open(image, ext) for image in filepathsAndFileNames]
     #Create list to associate the fits file with the date that it was imaged
     dateList = []
-    dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header[date]]) for ii in range(len(filepathsAndFileNames))
+    for ii in range(len(filepathsAndFileNames)):
+        dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header[date]])
     #Remove the time information from the date strings, assuming standard fits date time reporting: '2016-11-27T16:10:41.041'
-    dateList[jj][1].split('T', 1)[0] for ii in range(len(datelist)) #remove time
-    dateList[kk][1].replace("T", "") for kk in range(len(datelist)) #remove 'T' character
+    for ii in range(len(datelist)):
+        dateList[jj][1].split('T', 1)[0]  #remove time
+    for kk in range(len(datelist)):
+        dateList[kk][1].replace("T", "") #remove 'T' character
     #Sort the list by date
-    sorted(dateList, key=lambda x: strptime(x[1],'%Y-%m-%d')) #sort by second column
+    sorted(dateList, key=lambda x: datetime.datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
     #Add grouping column
     dateList = [ll + [0] for ll in dateList]
     #Tag each fits file with a group number
@@ -67,7 +69,7 @@ def processByDate(lintDict):
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
                                                        lintDict['overscanColumns'], loadFITS.openFiles(groupList), 
-                                                        lintDict['ext'], lintDict['rows'], lintDict['columns']))
+                                                        lintDict['ext'], lintDict['rows'], lintDict['columns'])
         #prepare the image for analysis
             #scale and stack images.
             #subtract the average sky value from the image. 
@@ -87,12 +89,7 @@ def processByDate(lintDict):
         logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)
         del groupList[:]
         
-def timePlot(datelist):
+#def timePlot(datelist):
 #Plot the debris accumulation over time as: hist
 #X axis: time
 #Y axis: debris
-    #timePlot uses autogroup's datelist to arrange data by date:
-    #DATE    = '2016-11-27T16:10:41.041' / Creation Date and Time of File
-    #remove text after "T"
-    datelist[ii][:][2].split('T', 1)[0] for ii in range(len(datelist))
-    #sort by date
