@@ -60,8 +60,6 @@ def makeList(fileDir):
 #make a list of the files in the directory
     #setting up to list files
     filepathsAndFileNames = glob.glob(fileDir + '*')
-    print( "Looking in directory: ", fileDir)
-    print( "FITS files in directory: ", len(filepathsAndFileNames))
     return filepathsAndFileNames
 
 def openFiles(filepathsAndFileNames, ext, rows, columns):
