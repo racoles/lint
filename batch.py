@@ -55,7 +55,9 @@ def processByDate(lintDict):
 #Run LINT on pre-grouped (by date) fits files
     #group fits files by date
     dateList = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
-
+    #Processing loop
+    #Extract list of objects in a given group
+    #Process group
 ######
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
     fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
