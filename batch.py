@@ -29,7 +29,7 @@ def autoGroup(filepathsAndFileNames, ext):
     #Create list to associate the fits file with the date that it was imaged
     dateList = []
     dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header[date]]) for ii in range(len(filepathsAndFileNames))
-    #Remove the time information from the date strings
+    #Remove the time information from the date strings, assuming standard fits date time reporting: '2016-11-27T16:10:41.041'
     dateList[jj][1].split('T', 1)[0] for ii in range(len(datelist)) #remove time
     dateList[kk][1].replace("T", "") for kk in range(len(datelist)) #remove 'T' character
     #Sort the list by date
@@ -55,18 +55,16 @@ def processByDate(lintDict):
     dateList, groups = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     #Processing loop
     groupNumber = 0 #this will track which group is being processed by LINT
-    groupList = []
+    groupList = [] #this will be filled with all of the fits file names and paths of the fits files for a given group
     for ii in range(groups):
         #Extract list of objects in a given group from dateList
         for jj in range(groups):
             if dateList[jj][2] == groupNumber:
                 groupList.append(dateList[jj][0]) #add the file path for fits file in date group number "groupNumber" to list
-        
         #Process group
-######
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
-                                                       lintDict['overscanColumns'], loadFITS.openFiles(loadFITS.makeList(lintDict['fitsPath']), 
+                                                       lintDict['overscanColumns'], loadFITS.openFiles(groupList), 
                                                         lintDict['ext'], lintDict['rows'], lintDict['columns']))
         #prepare the image for analysis
             #scale and stack images.
