@@ -4,7 +4,10 @@
 Updated on Apr 11, 2016
 
 autogroup:
-create a list that groups the fits files by date.
+Create a list that groups the fits files by date.
+
+processByDate:
+Run LINT on pre-grouped (by date) fits files
 
 timePlot:
 #Plot the debris accumulation over time as: hist
