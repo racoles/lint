@@ -44,8 +44,10 @@ def autoGroup(filepathsAndFileNames, ext):
         if ll == 0:
             dateList[ll][2] = 0
         elif dateList[ll][1] == dateList[ll-1][1]:
-            
-        
+            dateList[ll][2] = ittr
+        else:
+            ittr += 1
+            dateList[ll][2] = ittr    
     print(dateList)
     
 def processByDate(lintDict):
