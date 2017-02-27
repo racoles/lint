@@ -36,38 +36,36 @@ def autoGroup(filepathsAndFileNames, ext):
         dateList[jj][1] = dateList[jj][1].split('T', 1)[0]  #remove time
     for kk in range(len(dateList)):
         dateList[kk][1].replace("T", "") #remove 'T' character
-    #Sort the list by date
-    sorted(dateList, key=lambda x: datetime.datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
     #Add grouping column
     dateList = [ll + [0] for ll in dateList]
+    #Determine how many groups are needed
+    allPossibleDates = list(set(dateList[:][1]))
+    print(allPossibleDates)
     #Tag each fits file with a group number
-    groups = 0
-    for mm in range(len(dateList)):
-        if mm == 0:
-            dateList[mm][2] = 0
-        elif dateList[mm][1] == dateList[mm-1][1]:
-            dateList[mm][2] = groups
-        else:
-            groups += 1
-            dateList[mm][2] = groups    
-    return dateList, groups
+    for mm in range(len(allPossibleDates)):
+        for nn in range(len(dateList)):
+            if allPossibleDates[mm] == dateList[nn][1]:
+                dateList[nn][2] = mm
+    return dateList, allPossibleDates
+
+    #Sort the list by date
+    #sorted(dateList, key=lambda x: datetime.datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
     
 def processByDate(lintDict):
 #Run LINT on pre-grouped (by date) fits files
     print( "Looking in directory: ", lintDict['fitsPath'])
     #group fits files by date
-    dateList, groups = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
+    dateList, allPossibleDates = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     print( "FITS files in directory: ", len(dateList))
     print(dateList)
-    print(groups)
     #Processing loop
     groupNumber = 0 #this will track which group is being processed by LINT
     groupList = [] #this will be filled with all of the fits file names and paths of the fits files for a given group
-    for ii in range(groups):
+    for ii in range(len(allPossibleDates)):
         #Print counter to screen
-        print('PROCESSING GROUP ', groupNumber, '/', groups)
+        print('PROCESSING GROUP ', groupNumber, '/', len(allPossibleDates))
         #Extract list of objects in a given group from dateList
-        for jj in range(groups):
+        for jj in range(len(allPossibleDates)):
             if dateList[jj][2] == groupNumber:
                 groupList.append(dateList[jj][0]) #add the file path for fits file in date group number "groupNumber" to list
                 groupDate = dateList[jj][1] #use the to print the date of the current group to the screen
