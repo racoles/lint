@@ -11,29 +11,38 @@ timePlot:
     X axis: time
     Y axis: debris
 '''
-#will be merging groups of fits files. so will need to sort and then run lint on groups
-
-# Import #######################################################################################
+# Import
 import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput
+import datetime
 from loadConfig import loadConfig
 from overscan import subtractOverscan
 from skyValue import subtractAverageSky
 from timeSubtraction import timeSub
 from astropy.io import fits
+from operator import itemgetter
 
 def autoGroup(filepathsAndFileNames, ext):
 #Create a list of fits files from a given directory that indicates the date that the flat field image was taken
 #The list will indicate which date "group" each image should be in
     #Load the header information for all of the images into a list
     hdulist = [fits.open(image, ext) for image in filepathsAndFileNames]
-    #Create list to assocate the fits file with the date that it was imaged
-    for ii in range(len(filepathsAndFileNames))
-        dateList[ii] = [ii, filepathsAndFileNames[ii] , hdulist[ii][ext].header[date]]
-    print(datelist)
+    #Create list to associate the fits file with the date that it was imaged
+    dateList = []
+    for ii in range(len(filepathsAndFileNames)):
+        dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header[date]])
+    #Remove the time information from the date strings
+    for jj in range(len(dateList)):
+        dateList[jj][1] = dateList[jj][1].split('T', 1)[0] #remove time
+        dateList[jj][1] = dateList[jj][1].replace("T", "") #remove 'T' character
+    #Sort the list by date
+    sorted(dateList, key=lambda x: datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
+        
+    print(dateList)
     
 def processByDate(lintDict):
 #Run LINT on pre-grouped (by date) fits files
-
+    #group fits files by date
+    datelist = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
 
 ######
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"

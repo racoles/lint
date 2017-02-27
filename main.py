@@ -86,17 +86,18 @@ from loadConfig import loadConfig
 #from overscan import subtractOverscan
 #from skyValue import subtractAverageSky
 #from timeSubtraction import timeSub
+from batch import processByDate
 
 # Variables ####################################################################################
 
 #Load LINT.config
-lintDict = loadConfig()
+#lintDict = loadConfig()
 
 ################################################################################################
 
 if __name__ == '__main__':
-    #Load dictionary of user inputs (from LINT.config) and begin processing
-    processByDate(lintDict)
+    #Load dictionary of user inputs (from LINT.config) and begin processing. Using loadConfig to load variables from LINT.config into dictonary.
+    processByDate(loadConfig())
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
 #    fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
 #                                                   lintDict['overscanColumns'], loadFITS.openFiles(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'], lintDict['rows'], lintDict['columns']))
