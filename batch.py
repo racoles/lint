@@ -21,13 +21,6 @@ from skyValue import subtractAverageSky
 from timeSubtraction import timeSub
 from astropy.io import fits
 
-# Variables ####################################################################################
-
-#Load LINT.config
-lintDict = loadConfig()
-
-################################################################################################
-
 def autoGroup(filepathsAndFileNames, ext):
 #Create a list of fits files from a given directory that indicates the date that the flat field image was taken
 #The list will indicate which date "group" each image should be in
@@ -38,8 +31,11 @@ def autoGroup(filepathsAndFileNames, ext):
         dateList[ii] = [ii, filepathsAndFileNames[ii] , hdulist[ii][ext].header[date]]
     print(datelist)
     
-def processByDate(filepathsAndFileNames, ext):
+def processByDate(lintDict):
 #Run LINT on pre-grouped (by date) fits files
+
+
+######
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
     fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
                                                    lintDict['overscanColumns'], loadFITS.openFiles(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'], lintDict['rows'], lintDict['columns']))
