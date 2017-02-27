@@ -49,11 +49,12 @@ def autoGroup(filepathsAndFileNames, ext):
             ittr += 1
             dateList[ll][2] = ittr    
     print(dateList)
+    return dateList
     
 def processByDate(lintDict):
 #Run LINT on pre-grouped (by date) fits files
     #group fits files by date
-    datelist = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
+    dateList = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
 
 ######
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
