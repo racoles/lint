@@ -39,24 +39,25 @@ def autoGroup(filepathsAndFileNames, ext):
     #Add grouping column
     dateList = [kk + [0] for kk in dateList]
     #Tag each fits file with a group number
-    ittr = 0
+    groups = 0
     for ll in range(len(dateList)):
         if ll == 0:
             dateList[ll][2] = 0
         elif dateList[ll][1] == dateList[ll-1][1]:
-            dateList[ll][2] = ittr
+            dateList[ll][2] = groups
         else:
-            ittr += 1
-            dateList[ll][2] = ittr    
+            groups += 1
+            dateList[ll][2] = groups    
     print(dateList)
-    return dateList
+    return dateList, groups
     
 def processByDate(lintDict):
 #Run LINT on pre-grouped (by date) fits files
     #group fits files by date
-    dateList = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
+    dateList, groups = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     #Processing loop
-    #Extract list of objects in a given group
+    groupNumber = 0 #this will track which group is being processed by lint
+    #Extract list of objects in a given group from dateList
     #Process group
 ######
     #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
