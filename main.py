@@ -104,7 +104,7 @@ if __name__ == '__main__':
     #prepare the image for analysis
         #scale and stack images.
         #subtract the average sky value from the image. 
-    #invert the image to make attenuation spots appear positive to photometry code.
+        #invert the image to make attenuation spots appear positive to photometry code.
 #    invertedImage = (subtractAverageSky(scaleAndStack.stackImages(scaleAndStack.scaleToMean(fitsArrayOverscanSubtracted))))*(-1)
     #save the scaled, stacked, inverted image
 #    outputName, output_folder_path = loadFITS.saveFITS(lintDict['fitsPath'], invertedImage, lintDict['outputFITS'])

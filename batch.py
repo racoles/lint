@@ -28,26 +28,24 @@ def autoGroup(filepathsAndFileNames, ext):
     hdulist = [fits.open(image, ext) for image in filepathsAndFileNames]
     #Create list to associate the fits file with the date that it was imaged
     dateList = []
-    for ii in range(len(filepathsAndFileNames)):
-        dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header[date]])
+    dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header[date]]) for ii in range(len(filepathsAndFileNames))
     #Remove the time information from the date strings
-    for jj in range(len(dateList)):
-        dateList[jj][1] = dateList[jj][1].split('T', 1)[0] #remove time
-        dateList[jj][1] = dateList[jj][1].replace("T", "") #remove 'T' character
+    dateList[jj][1].split('T', 1)[0] for ii in range(len(datelist)) #remove time
+    dateList[kk][1].replace("T", "") for kk in range(len(datelist)) #remove 'T' character
     #Sort the list by date
     sorted(dateList, key=lambda x: strptime(x[1],'%Y-%m-%d')) #sort by second column
     #Add grouping column
-    dateList = [kk + [0] for kk in dateList]
+    dateList = [ll + [0] for ll in dateList]
     #Tag each fits file with a group number
     groups = 0
-    for ll in range(len(dateList)):
-        if ll == 0:
-            dateList[ll][2] = 0
-        elif dateList[ll][1] == dateList[ll-1][1]:
-            dateList[ll][2] = groups
+    for mm in range(len(dateList)):
+        if mm == 0:
+            dateList[mm][2] = 0
+        elif dateList[mm][1] == dateList[mm-1][1]:
+            dateList[mm][2] = groups
         else:
             groups += 1
-            dateList[ll][2] = groups    
+            dateList[mm][2] = groups    
     print(dateList)
     return dateList, groups
     
@@ -57,19 +55,23 @@ def processByDate(lintDict):
     dateList, groups = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     #Processing loop
     groupNumber = 0 #this will track which group is being processed by LINT
-    #loop start
+    groupList = []
     for ii in range(groups):
-    #Extract list of objects in a given group from dateList
-    
-    #Process group
+        #Extract list of objects in a given group from dateList
+        for jj in range(groups):
+            if dateList[jj][2] == groupNumber:
+                groupList.append(dateList[jj][0]) #add the file path for fits file in date group number "groupNumber" to list
+        
+        #Process group
 ######
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
-                                                       lintDict['overscanColumns'], loadFITS.openFiles(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'], lintDict['rows'], lintDict['columns']))
+                                                       lintDict['overscanColumns'], loadFITS.openFiles(loadFITS.makeList(lintDict['fitsPath']), 
+                                                        lintDict['ext'], lintDict['rows'], lintDict['columns']))
         #prepare the image for analysis
             #scale and stack images.
             #subtract the average sky value from the image. 
-        #invert the image to make attenuation spots appear positive to photometry code.
+            #invert the image to make attenuation spots appear positive to photometry code.
         invertedImage = (subtractAverageSky(scaleAndStack.stackImages(scaleAndStack.scaleToMean(fitsArrayOverscanSubtracted))))*(-1)
         #save the scaled, stacked, inverted image
         outputName, output_folder_path = loadFITS.saveFITS(lintDict['fitsPath'], invertedImage, lintDict['outputFITS'])
@@ -83,7 +85,8 @@ def processByDate(lintDict):
         n1, bin_centers = analyzeSExOutput.createHist(cutTable, output_folder_path)
         #create a log10 plot
         logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)
-
+        del groupList[:]
+        
 def timePlot(datelist):
 #Plot the debris accumulation over time as: hist
 #X axis: time
