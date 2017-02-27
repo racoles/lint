@@ -26,17 +26,19 @@ def autoGroup(filepathsAndFileNames, ext):
 #Create a list of fits files from a given directory that indicates the date that the flat field image was taken
 #The list will indicate which date "group" each image should be in
     #Load the header information for all of the images into a list
-    hdulist = [fits.open(image, ext) for image in filepathsAndFileNames]
+    hdulist = [fits.open(image) for image in filepathsAndFileNames]
+    print(hdulist)
     #Create list to associate the fits file with the date that it was imaged
     dateList = []
     for ii in range(len(filepathsAndFileNames)):
-        dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header[date]])
+        dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header['DATE']])
     #Remove the time information from the date strings, assuming standard fits date time reporting: '2016-11-27T16:10:41.041'
-    for ii in range(len(datelist)):
+    for jj in range(len(dateList)):
         dateList[jj][1].split('T', 1)[0]  #remove time
-    for kk in range(len(datelist)):
+    for kk in range(len(dateList)):
         dateList[kk][1].replace("T", "") #remove 'T' character
     #Sort the list by date
+    print(dateList)
     sorted(dateList, key=lambda x: datetime.datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
     #Add grouping column
     dateList = [ll + [0] for ll in dateList]
