@@ -27,18 +27,16 @@ def autoGroup(filepathsAndFileNames, ext):
 #The list will indicate which date "group" each image should be in
     #Load the header information for all of the images into a list
     hdulist = [fits.open(image) for image in filepathsAndFileNames]
-    print(hdulist)
     #Create list to associate the fits file with the date that it was imaged
     dateList = []
     for ii in range(len(filepathsAndFileNames)):
         dateList.append([filepathsAndFileNames[ii], hdulist[ii][ext].header['DATE']])
     #Remove the time information from the date strings, assuming standard fits date time reporting: '2016-11-27T16:10:41.041'
     for jj in range(len(dateList)):
-        dateList[jj][1].split('T', 1)[0]  #remove time
+        dateList[jj][1] = dateList[jj][1].split('T', 1)[0]  #remove time
     for kk in range(len(dateList)):
         dateList[kk][1].replace("T", "") #remove 'T' character
     #Sort the list by date
-    print(dateList)
     sorted(dateList, key=lambda x: datetime.datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
     #Add grouping column
     dateList = [ll + [0] for ll in dateList]
@@ -70,8 +68,7 @@ def processByDate(lintDict):
         #Process group
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
-                                                       lintDict['overscanColumns'], loadFITS.openFiles(groupList), 
-                                                        lintDict['ext'], lintDict['rows'], lintDict['columns'])
+                                                       lintDict['overscanColumns'], loadFITS.openFiles(groupList, lintDict['ext'], lintDict['rows'], lintDict['columns']))
         #prepare the image for analysis
             #scale and stack images.
             #subtract the average sky value from the image. 
