@@ -66,7 +66,8 @@ def processByDate(lintDict):
         for jj in range(groups):
             if dateList[jj][2] == groupNumber:
                 groupList.append(dateList[jj][0]) #add the file path for fits file in date group number "groupNumber" to list
-        print('GROUP ', groupNumber, '    TAKEN ON ', ) ################################################################################################################
+                groupDate = dateList[jj][1] #use the to print the date of the current group to the screen
+        print('GROUP ', groupNumber, '    TAKEN ON ', groupDate)
         #Process group
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
