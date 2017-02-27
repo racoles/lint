@@ -81,40 +81,11 @@ This research makes use of:
     -Hunter, J. D. Matplotlib: A 2D graphics environment. 2007
 '''
 # Import #######################################################################################
-#import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput
 from loadConfig import loadConfig
-#from overscan import subtractOverscan
-#from skyValue import subtractAverageSky
-#from timeSubtraction import timeSub
 from batch import processByDate
-
-# Variables ####################################################################################
-
-#Load LINT.config
-#lintDict = loadConfig()
 
 ################################################################################################
 
 if __name__ == '__main__':
-    #Load dictionary of user inputs (from LINT.config) and begin processing. Using loadConfig to load variables from LINT.config into dictonary.
+    #Load dictionary of user inputs (from LINT.config using loadConfig()) and begin processing. Using loadConfig to load variables from LINT.config into dictonary.
     processByDate(loadConfig())
-    #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
-#    fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
-#                                                   lintDict['overscanColumns'], loadFITS.openFiles(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'], lintDict['rows'], lintDict['columns']))
-    #prepare the image for analysis
-        #scale and stack images.
-        #subtract the average sky value from the image. 
-        #invert the image to make attenuation spots appear positive to photometry code.
-#    invertedImage = (subtractAverageSky(scaleAndStack.stackImages(scaleAndStack.scaleToMean(fitsArrayOverscanSubtracted))))*(-1)
-    #save the scaled, stacked, inverted image
-#    outputName, output_folder_path = loadFITS.saveFITS(lintDict['fitsPath'], invertedImage, lintDict['outputFITS'])
-    #send the scaled/stacked/inverted image to SExtractor with the user give parameter file
-#    callSExtractor.sendSEImage(lintDict['fitsPath'], outputName, lintDict['SExParameterFile'])
-    #read SExtractor output file, and make cuts to SExtractor output table
-#    cutTable = analyzeSExOutput.cutsSExOutput(analyzeSExOutput.loadSExOutput(lintDict['SExParameterFile'], output_folder_path),
-#                                              lintDict['flagLimit'], lintDict['fluxLimit'], lintDict['SNRlimit'], 
-#                                              lintDict['FWHMlimit'], output_folder_path)
-    #create the histogram
-#    n1, bin_centers = analyzeSExOutput.createHist(cutTable, output_folder_path)
-    #create a log10 plot
-#    logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)

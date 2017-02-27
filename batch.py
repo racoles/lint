@@ -20,7 +20,6 @@ from datetime import strptime
 from loadConfig import loadConfig
 from overscan import subtractOverscan
 from skyValue import subtractAverageSky
-from timeSubtraction import timeSub
 from astropy.io import fits
 from operator import itemgetter
 
