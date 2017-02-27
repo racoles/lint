@@ -13,7 +13,7 @@ timePlot:
 '''
 # Import
 import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput
-import datetime
+from datetime import strptime
 from loadConfig import loadConfig
 from overscan import subtractOverscan
 from skyValue import subtractAverageSky
@@ -35,7 +35,16 @@ def autoGroup(filepathsAndFileNames, ext):
         dateList[jj][1] = dateList[jj][1].split('T', 1)[0] #remove time
         dateList[jj][1] = dateList[jj][1].replace("T", "") #remove 'T' character
     #Sort the list by date
-    sorted(dateList, key=lambda x: datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
+    sorted(dateList, key=lambda x: strptime(x[1],'%Y-%m-%d')) #sort by second column
+    #Add grouping column
+    dateList = [kk + [0] for kk in dateList]
+    #Tag each fits file with a group number
+    ittr = 0
+    for ll in range(len(dateList)):
+        if ll == 0:
+            dateList[ll][2] = 0
+        elif dateList[ll][1] == dateList[ll-1][1]:
+            
         
     print(dateList)
     
