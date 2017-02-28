@@ -109,6 +109,6 @@ def imageDimensionTest(rows, columns, filepathsAndFileNames, ext):
     if not badSize:
         print('All images have passed the dimensions test')
     else:
-        print('Some images do not have the proper dimensions. Please remove these images and restart LINT:')
-        print(badSize)
+        print('Some images do not have the proper dimensions. Please remove these', len(badSize),' images and restart LINT:')
+        print("\n".join(badSize))
         exit('Error: Images present that do not fit the row and column dimensions specified in LINT.config')
