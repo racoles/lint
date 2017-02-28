@@ -39,12 +39,12 @@ def loadSExOutput(parameterFile, output_folder_path):
     outputsFolder(output_folder_path, moveFileName='aper.fits')
     return sexOutput
 
-def cutsSExOutput(output, flagLimit, fluxLimit, SNRlimit, FWHMlimit, output_folder_path):
+def cutsSExOutput(sexOutput, flagLimit, fluxLimit, SNRlimit, FWHMlimit, output_folder_path):
 #Make cuts to data as decided by user
     #print original data object number
-    print( 'Number of object identified extracted by SExtractor: ', len(output))
+    print( 'Number of object identified extracted by SExtractor: ', len(sexOutput))
     #Flag cut
-    cutFlags = output[logical_not(output['FLAGS'] > flagLimit)]
+    cutFlags = sexOutput[logical_not(sexOutput['FLAGS'] > flagLimit)]
     print( 'Number of objects remaining after Flags cut:', len(cutFlags))
     #Flux cut
     cutFlux = cutFlags[logical_not(cutFlags['FLUX_AUTO'] < fluxLimit)]
