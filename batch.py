@@ -53,24 +53,21 @@ def autoGroup(filepathsAndFileNames, ext):
     return dateList, allPossibleDates
     
 def processByDate(lintDict):
-#Run LINT on pre-grouped (by date) fits files
+#Run LINT on grouped (by date) fits files
     print( "Looking in directory: ", lintDict['fitsPath'])
     #group fits files by date
     dateList, allPossibleDates = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     print( "FITS files in directory: ", len(dateList))
-    print(dateList)
-    #Processing loop
-    groupNumber = 0 #this will track which group is being processed by LINT
+    #LINT Processing loop
     groupList = [] #this will be filled with all of the fits file names and paths of the fits files for a given group
     for ii in range(len(allPossibleDates)):
         #Print counter to screen
-        print('PROCESSING GROUP ', groupNumber+1, '/', len(allPossibleDates))
+        print('PROCESSING GROUP ', ii+1, '/', len(allPossibleDates))
         #Extract list of objects in a given group from dateList
-        for jj in range(len(allPossibleDates)):
-            if dateList[jj][2] == groupNumber:
+        for jj in range(len(dateList)):
+            if dateList[jj][2] == ii:
                 groupList.append(dateList[jj][0]) #add the file path for fits file in date group number "groupNumber" to list
-                groupDate = dateList[jj][1] #use the to print the date of the current group to the screen
-        print('GROUP ', groupNumber+1, 'FLATS TAKEN ON ', groupDate)
+        print('GROUP ', ii+1, 'FLATS TAKEN ON ', allPossibleDates[ii])
         #Process group
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
@@ -94,7 +91,6 @@ def processByDate(lintDict):
         #create a log10 plot
         logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)
         del groupList[:]
-        groupNumber += groupNumber
         
 #def timePlot(datelist):
 #Plot the debris accumulation over time as: hist
