@@ -55,6 +55,8 @@ def autoGroup(filepathsAndFileNames, ext):
 def processByDate(lintDict):
 #Run LINT on grouped (by date) fits files
     print( "Looking in directory: ", lintDict['fitsPath'])
+    #test the dimensions of the images in the directory
+    imageDimensionTest(lintDict['rows'], lintDict['columns'], makeList(lintDict['fitsPath']), lintDict['ext'])
     #group fits files by date
     dateList, allPossibleDates = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     print( "FITS files in directory: ", len(dateList))
