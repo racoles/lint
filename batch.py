@@ -51,9 +51,6 @@ def autoGroup(filepathsAndFileNames, ext):
             if allPossibleDates[mm] == dateList[nn][1]:
                 dateList[nn][2] = mm
     return dateList, allPossibleDates
-
-    #Sort the list by date
-    #sorted(dateList, key=lambda x: datetime.datetime.strptime(x[1],'%Y-%m-%d')) #sort by second column
     
 def processByDate(lintDict):
 #Run LINT on pre-grouped (by date) fits files
@@ -67,13 +64,13 @@ def processByDate(lintDict):
     groupList = [] #this will be filled with all of the fits file names and paths of the fits files for a given group
     for ii in range(len(allPossibleDates)):
         #Print counter to screen
-        print('PROCESSING GROUP ', groupNumber, '/', len(allPossibleDates))
+        print('PROCESSING GROUP ', groupNumber+1, '/', len(allPossibleDates))
         #Extract list of objects in a given group from dateList
         for jj in range(len(allPossibleDates)):
             if dateList[jj][2] == groupNumber:
                 groupList.append(dateList[jj][0]) #add the file path for fits file in date group number "groupNumber" to list
                 groupDate = dateList[jj][1] #use the to print the date of the current group to the screen
-        print('GROUP ', groupNumber, 'FLATS TAKEN ON ', groupDate)
+        print('GROUP ', groupNumber+1, 'FLATS TAKEN ON ', groupDate)
         #Process group
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],
