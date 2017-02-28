@@ -21,6 +21,7 @@ from overscan import subtractOverscan
 from skyValue import subtractAverageSky
 from astropy.io import fits
 from operator import itemgetter
+from numpy import append, empty
 
 def autoGroup(filepathsAndFileNames, ext):
 #Create a list of fits files from a given directory that indicates the date that the flat field image was taken
@@ -62,6 +63,8 @@ def processByDate(lintDict):
     print( "FITS files in directory: ", len(dateList))
     #LINT Processing loop
     groupList = [] #this will be filled with all of the fits file names and paths of the fits files for a given group
+    #timeTable = zeros((len(allPossibleDates),int(lintDict['rows']),int(lintDict['columns'])))
+    timeTable = []
     for ii in range(len(allPossibleDates)):
         #Print counter to screen
         print('PROCESSING GROUP ', ii, '/', len(allPossibleDates)-1)
@@ -92,7 +95,11 @@ def processByDate(lintDict):
         n1, bin_centers = analyzeSExOutput.createHist(cutTable, output_folder_path)
         #create a log10 plot
         logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)
+        #add cutTable from this group to a list of numpy arrays to be used in timePlot to plot debris accumulation over time
+        timeTable.append(cutTable)
+        #empty group list for next process iteration
         del groupList[:]
+    return timeTable, allPossibleDates
         
 #def timePlot(datelist):
 #Plot the debris accumulation over time as: hist

@@ -59,9 +59,6 @@ Modules:
     
 To do:
     -add logger
-    -fitting
-    -histograms
-    -batch processing
     -add help command in optional arguments
     -check to see if dependencies are installed
     -add Try command for errors
