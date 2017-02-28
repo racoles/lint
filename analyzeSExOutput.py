@@ -117,7 +117,6 @@ def logPlot(n1, bin_centers, output_folder_path):
     plt.gca().set_ylim(bottom=0)
     plt.gca().set_xlim(left=0)
     # Save plot to file
-    #plt.show()
     fig.savefig('logplot.png')
     # Move logplot to output folder
     outputsFolder(output_folder_path ,moveFileName='logplot.png')

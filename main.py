@@ -74,10 +74,10 @@ This research makes use of:
 '''
 # Import #######################################################################################
 from loadConfig import loadConfig
-from batch import processByDate
+from batch import timePlot
 
 ################################################################################################
 
 if __name__ == '__main__':
     #Load dictionary of user inputs (from LINT.config using loadConfig()) and begin processing. Using loadConfig to load variables from LINT.config into dictonary.
-    processByDate(loadConfig())
+    timePlot(loadConfig())

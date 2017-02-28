@@ -67,6 +67,7 @@ def processByDate(lintDict):
     timeTable = []
     for ii in range(len(allPossibleDates)):
         #Print counter to screen
+        print('\n' * 2)
         print('PROCESSING GROUP ', ii, '/', len(allPossibleDates)-1)
         #Extract list of objects in a given group from dateList
         for jj in range(len(dateList)):
@@ -96,7 +97,7 @@ def processByDate(lintDict):
         #create a log10 plot
         logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)
         #add cutTable from this group to a list of numpy arrays to be used in timePlot to plot debris accumulation over time
-        timeTable.append(cutTable)
+        timeTable.append(len(cutTable))
         #empty group list for next process iteration
         del groupList[:]
     return timeTable, allPossibleDates
@@ -106,3 +107,4 @@ def timePlot(lintDict):
 #X axis: time
 #Y axis: debris
     timeTable, allPossibleDates = processByDate(lintDict)
+    print(timeTable)
