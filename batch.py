@@ -101,7 +101,8 @@ def processByDate(lintDict):
         del groupList[:]
     return timeTable, allPossibleDates
         
-#def timePlot(datelist):
+def timePlot(lintDict):
 #Plot the debris accumulation over time as: hist
 #X axis: time
 #Y axis: debris
+    timeTable, allPossibleDates = processByDate(lintDict)
