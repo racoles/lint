@@ -107,4 +107,3 @@ def timePlot(lintDict):
 #X axis: time
 #Y axis: debris
     timeTable, allPossibleDates = processByDate(lintDict)
-    print(timeTable)
