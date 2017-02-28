@@ -39,7 +39,12 @@ def autoGroup(filepathsAndFileNames, ext):
     #Add grouping column
     dateList = [ll + [0] for ll in dateList]
     #Determine how many groups are needed
-    allPossibleDates = list(set(dateList[:][1]))
+    allPossibleDates = []
+    for ll in range(len(dateList)):
+        if dateList[ll][1] not in allPossibleDates:
+            allPossibleDates.append(dateList[ll][1])
+    #Sort the dates in ascending order
+    allPossibleDates = list(set(allPossibleDates))
     print(allPossibleDates)
     #Tag each fits file with a group number
     for mm in range(len(allPossibleDates)):
@@ -93,6 +98,7 @@ def processByDate(lintDict):
         #create a log10 plot
         logNPlot = analyzeSExOutput.logPlot(n1, bin_centers, output_folder_path)
         del groupList[:]
+        groupNumber += groupNumber
         
 #def timePlot(datelist):
 #Plot the debris accumulation over time as: hist

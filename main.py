@@ -58,15 +58,10 @@ Modules:
             debris versus clean area
     
 To do:
-    -add check to make sure that images are the same size
     -add logger
     -fitting
     -histograms
-    -add module to handle fpack & funpack FITS image compression
     -batch processing
-    -save fig
-    -auto group fits files by date
-    -accept multi-extension fits files
     -add help command in optional arguments
     -check to see if dependencies are installed
     -add Try command for errors
