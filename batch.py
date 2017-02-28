@@ -64,12 +64,12 @@ def processByDate(lintDict):
     groupList = [] #this will be filled with all of the fits file names and paths of the fits files for a given group
     for ii in range(len(allPossibleDates)):
         #Print counter to screen
-        print('PROCESSING GROUP ', ii+1, '/', len(allPossibleDates))
+        print('PROCESSING GROUP ', ii, '/', len(allPossibleDates)-1)
         #Extract list of objects in a given group from dateList
         for jj in range(len(dateList)):
             if dateList[jj][2] == ii:
                 groupList.append(dateList[jj][0]) #add the file path for fits file in date group number "groupNumber" to list
-        print('GROUP ', ii+1, 'FLATS TAKEN ON ', allPossibleDates[ii])
+        print('GROUP ', ii, 'FLATS TAKEN ON: ', allPossibleDates[ii])
         #Process group
         #Subtract overscan, and mask overscan regions, if overscanSubtractBOOL is "True"
         fitsArrayOverscanSubtracted = subtractOverscan(lintDict['overscanSubtractBOOL'], lintDict['overscanRows'],

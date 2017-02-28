@@ -33,7 +33,7 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
         output_path = os.path.dirname(os.path.dirname(files_path)) #Here files_path is fits files location
         output_folder_name = 'LINT_Output_' + today.isoformat()
         #Make output dir. Append # to dir name if dir already exists
-        if not os.path.exists(os.path.join(output_path, output_folder_name)):  #Folder doesn't exist
+        if not os.path.exists(os.path.join(output_path, output_folder_name)):  #No LINT output files exist for today's date
             os.mkdir(os.path.join(output_path, output_folder_name))
             new_folder_path = os.path.join(output_path, output_folder_name)
             print('New folder created for output products: ', new_folder_path)
@@ -42,7 +42,7 @@ def outputsFolder(files_path, *default_parameters, **keyword_parameters):
             folder_exist = True
             iterator = 1
             while folder_exist == True:
-                output_product_folder_name = output_folder_name + '_' + str(iterator)
+                output_product_folder_name = output_folder_name + '_Group-' + str(iterator)
                 if not os.path.exists(os.path.join(output_path, output_product_folder_name)):
                    os.mkdir(os.path.join(output_path, output_product_folder_name))
                    new_folder_path = os.path.join(output_path, output_product_folder_name)
