@@ -15,13 +15,14 @@ timePlot:
     Y axis: debris
 '''
 # Import
-import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput, datetime
+import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput, datetime, os
+import matplotlib.pyplot as plt
 from loadConfig import loadConfig
 from overscan import subtractOverscan
 from skyValue import subtractAverageSky
 from astropy.io import fits
 from operator import itemgetter
-from numpy import append, empty
+from numpy import append, empty, amin, amax
 
 def autoGroup(filepathsAndFileNames, ext):
 #Create a list of fits files from a given directory that indicates the date that the flat field image was taken
@@ -107,3 +108,25 @@ def timePlot(lintDict):
 #X axis: time
 #Y axis: debris
     timeTable, allPossibleDates = processByDate(lintDict)
+    #histogram: debris over time
+    fig, ax = plt.subplots()
+    n1, bins1, patches1 = ax.hist(timeTable, bins=len(timeTable), facecolor='blue')
+    plt.xlabel('Image Date', labelpad=20)
+    plt.ylabel('Number of Dust Spots')
+    plt.title('Number of Dust Spots versus Image Date')
+    plt.axis([amin(timeTable), amax(timeTable), amin(n1), amax(n1)])
+    plt.grid(True)
+    # Label the raw counts below the x-axis...
+    #bin_centers = 0.5 * diff(bins1) + bins1[:-1]
+    #for count, x in zip(n1, bin_centers):
+    # Label the raw counts
+    #    ax.annotate(str(count), xy=(x, 0), xycoords=('data', 'axes fraction'),
+    #                xytext=(0, -18), textcoords='offset points', va='top', ha='center')
+    # Give ourselves some more room at the bottom of the plot
+    plt.subplots_adjust(bottom=.15)
+    # Save histogram to file
+    fig.set_size_inches(18.5, 10.5)
+    plotDir = os.path.join(os.path.dirname(lintDict['fitsPath']), os.path.pardir)
+    fig.savefig(os.path.join(plotDir, 'DebrisOverTime.png'))
+    #Save plot
+    print( 'Debris over time histogram saved to: ', plotDir)

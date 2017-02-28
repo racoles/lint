@@ -74,11 +74,9 @@ def createHist(cutTable, output_folder_path):
     n1, bins1, patches1 = ax.hist(areaList, bins=20, facecolor='green')
     plt.xlabel('Areas of Dust Spot (square pixels)', labelpad=20)
     plt.ylabel('Number of Dust Spots')
-    plt.title('Areas of Dust Spot versus Number of Dust Spots')
+    plt.title('Number of Dust Spots versus Areas of Dust Spots')
     plt.axis([amin(areaList), amax(areaList), amin(n1), amax(n1)])
     plt.grid(True)
-    #plt.xticks(arange(amin(areaList), amax(areaList)+1, 10.0))
-    #plt.yticks(arange(amin(n1), amax(n1)+1, 100))
     # Label the raw counts below the x-axis...
     bin_centers = 0.5 * diff(bins1) + bins1[:-1]
     for count, x in zip(n1, bin_centers):
@@ -113,7 +111,7 @@ def logPlot(n1, bin_centers, output_folder_path):
     plt.plot(no_zeros[:,0], poly1d(polyfit(no_zeros[:,0], log10(no_zeros[:,1]), 1))(no_zeros[:,0]),'r')
     plt.xlabel('Areas of Dust Spot (square pixels)', labelpad=10)
     plt.ylabel('Log10 Number of Dust Spots')
-    plt.title('Areas of Dust Spot versus Log10 Number of Dust Spots')
+    plt.title('Log10 Number of Dust Spots versus Areas of Dust Spots')
     plt.gca().set_ylim(bottom=0)
     plt.gca().set_xlim(left=0)
     # Save plot to file
