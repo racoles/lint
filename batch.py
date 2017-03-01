@@ -107,26 +107,34 @@ def timePlot(lintDict):
 #Plot the debris accumulation over time as: hist
 #X axis: time
 #Y axis: debris
+    #process data
     timeTable, allPossibleDates = processByDate(lintDict)
     #histogram: debris over time
+    #X data
+    xx = list(range(1,len(allPossibleDates)+1))
+    #Y data
+    yy = timeTable
     fig, ax = plt.subplots()
-    n1, bins1, patches1 = ax.hist(timeTable, bins=len(timeTable), facecolor='blue')
+    ax.plot(xx, yy, 'ro', markersize=20)
     plt.xlabel('Image Date', labelpad=20)
     plt.ylabel('Number of Dust Spots')
     plt.title('Number of Dust Spots versus Image Date')
-    plt.axis([amin(timeTable), amax(timeTable), amin(n1), amax(n1)])
+    #plt.axis([amin(timeTable), amax(timeTable), amin(n1), amax(n1)])
+    plt.xticks(xx, allPossibleDates, rotation='horizontal')
     plt.grid(True)
-    # Label the raw counts below the x-axis...
-    bin_centers = 0.5 * diff(bins1) + bins1[:-1]
-    for count, x in zip(n1, bin_centers):
-    # Label the raw counts
-        ax.annotate(str(count), xy=(x, 0), xycoords=('data', 'axes fraction'),
-                    xytext=(0, -18), textcoords='offset points', va='top', ha='center')
     # Give ourselves some more room at the bottom of the plot
     plt.subplots_adjust(bottom=.15)
+    #annotate points
+    for allPossibleDates, xx, yy in zip(allPossibleDates, xx, yy):
+        plt.annotate(
+            timeTable,
+            xy=(xx, yy), xytext=(-20, 20),
+            textcoords='offset points', ha='right', va='bottom',
+            bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
+            arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
     # Save histogram to file
     fig.set_size_inches(18.5, 10.5)
     plotDir = os.path.join(os.path.dirname(lintDict['fitsPath']), os.path.pardir)
     fig.savefig(os.path.join(plotDir, 'DebrisOverTime.png'))
     #Save plot
-    print( 'Debris over time histogram saved to: ', plotDir)
+    print( 'Debris over time plot saved to: ', plotDir)
