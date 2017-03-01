@@ -22,7 +22,7 @@ from overscan import subtractOverscan
 from skyValue import subtractAverageSky
 from astropy.io import fits
 from operator import itemgetter
-from numpy import append, empty, amin, amax
+from numpy import append, empty, amin, amax, diff
 
 def autoGroup(filepathsAndFileNames, ext):
 #Create a list of fits files from a given directory that indicates the date that the flat field image was taken
@@ -117,11 +117,11 @@ def timePlot(lintDict):
     plt.axis([amin(timeTable), amax(timeTable), amin(n1), amax(n1)])
     plt.grid(True)
     # Label the raw counts below the x-axis...
-    #bin_centers = 0.5 * diff(bins1) + bins1[:-1]
-    #for count, x in zip(n1, bin_centers):
+    bin_centers = 0.5 * diff(bins1) + bins1[:-1]
+    for count, x in zip(n1, bin_centers):
     # Label the raw counts
-    #    ax.annotate(str(count), xy=(x, 0), xycoords=('data', 'axes fraction'),
-    #                xytext=(0, -18), textcoords='offset points', va='top', ha='center')
+        ax.annotate(str(count), xy=(x, 0), xycoords=('data', 'axes fraction'),
+                    xytext=(0, -18), textcoords='offset points', va='top', ha='center')
     # Give ourselves some more room at the bottom of the plot
     plt.subplots_adjust(bottom=.15)
     # Save histogram to file
