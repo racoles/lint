@@ -12,7 +12,7 @@ import glob, os, time, datetime
 from astropy.io import fits
 from loadConfig import loadConfig
 from numpy import zeros, empty, append, array
-from sys import exit
+from sys import exit, stdout
 
 def outputsFolder(files_path, *default_parameters, **keyword_parameters):
 #make a directory for output products and move output products into it
@@ -94,6 +94,9 @@ def imageDimensionTest(rows, columns, filepathsAndFileNames, ext):
     badSize = []
     print('LINT will now make sure that all of the images have the same dimensions.')
     print('The preferred dimensions of the images (as specified in the LINT.config file): ', rows, 'rows x ', columns, 'columns')
+    # Initial call to print 0% progress
+    tt = 0
+    print_progress(tt, len(filepathsAndFileNames), prefix = 'Progress:', suffix = 'Complete', decimals=2, bar_length=50)
     #check dimensions
     for ii in range(len(filepathsAndFileNames)):
         testImage = fits.getdata(filepathsAndFileNames[ii], ext)
@@ -105,6 +108,8 @@ def imageDimensionTest(rows, columns, filepathsAndFileNames, ext):
         if testImage.shape[1] != columns:
             badSize.append(filepathsAndFileNames[ii])
         testImage = None
+        tt += 1
+        print_progress(tt, len(filepathsAndFileNames), prefix = 'Progress:', suffix = 'Complete',  decimals=2, bar_length=50)
     #If there are any images with inappropriate sizes, LINT will list them and the program will exit.
     if not badSize:
         print('All images have passed the dimensions test')
@@ -112,3 +117,26 @@ def imageDimensionTest(rows, columns, filepathsAndFileNames, ext):
         print('Some images do not have the proper dimensions. Please remove these', len(badSize),' images and restart LINT:')
         print("\n".join(badSize))
         exit('Error: Images present that do not fit the row and column dimensions specified in LINT.config')
+        
+# Print iterations progress
+def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_length=100):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        bar_length  - Optional  : character length of bar (Int)
+    """
+    str_format = "{0:." + str(decimals) + "f}"
+    percents = str_format.format(100 * (iteration / float(total)))
+    filled_length = int(round(bar_length * iteration / float(total)))
+    bar = '█' * filled_length + '-' * (bar_length - filled_length)
+
+    stdout.write('\r%s |%s| %s%s %s' % (prefix, bar, percents, '%', suffix)),
+
+    if iteration == total:
+        stdout.write('\n')
+    stdout.flush()
