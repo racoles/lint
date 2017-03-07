@@ -91,6 +91,7 @@ def createHist(cutTable, output_folder_path):
     # Move hist to output folder
     outputsFolder(output_folder_path ,moveFileName='hist.png')
     print( 'Histogram saved to: ', output_folder_path)
+    plt.close('all')
     return n1, bin_centers
     
 def logPlot(n1, bin_centers, output_folder_path):
@@ -119,3 +120,4 @@ def logPlot(n1, bin_centers, output_folder_path):
     # Move logplot to output folder
     outputsFolder(output_folder_path ,moveFileName='logplot.png')
     print( 'Logplot saved to: ', output_folder_path)
+    plt.close('all')

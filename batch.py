@@ -58,7 +58,7 @@ def processByDate(lintDict):
 #Run LINT on grouped (by date) fits files
     print( "Looking in directory: ", lintDict['fitsPath'])
     #test the dimensions of the images in the directory
-    loadFITS.imageDimensionTest(lintDict['rows'], lintDict['columns'], loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
+    #loadFITS.imageDimensionTest(lintDict['rows'], lintDict['columns'], loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     #group fits files by date
     dateList, allPossibleDates = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     print( "FITS files in directory: ", len(dateList))
@@ -127,7 +127,7 @@ def timePlot(lintDict):
     #annotate points
     for allPossibleDates, xx, yy in zip(allPossibleDates, xx, yy):
         plt.annotate(
-            timeTable,
+            timeTable[xx],
             xy=(xx, yy), xytext=(-20, 20),
             textcoords='offset points', ha='right', va='bottom',
             bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
