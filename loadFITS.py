@@ -64,9 +64,8 @@ def makeList(fileDir):
 
 def openFiles(filepathsAndFileNames, ext, rows, columns):
 #load the fits file image data into a list (3D array)
-    #test the dimensions of the images in the directory
-    #imageDimensionTest(rows, columns, filepathsAndFileNames, ext)
     #load files
+    print('Opening FITS files...')
     fitsImages = [fits.getdata(image, ext) for image in filepathsAndFileNames]
     #convert to 3D numpy array
     numpyArray = array(fitsImages)

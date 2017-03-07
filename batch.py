@@ -46,7 +46,7 @@ def autoGroup(filepathsAndFileNames, ext):
         if dateList[ll][1] not in allPossibleDates:
             allPossibleDates.append(dateList[ll][1])
     #Sort the dates in ascending order
-    sorted(allPossibleDates, key=lambda xx: datetime.datetime.strptime(xx,'%Y-%m-%d')) #sort by date
+    allPossibleDates = sorted(allPossibleDates, key=lambda xx: datetime.datetime.strptime(xx,'%Y-%m-%d')) #sort by date
     #Tag each fits file with a group number
     for mm in range(len(allPossibleDates)):
         for nn in range(len(dateList)):
