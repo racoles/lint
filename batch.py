@@ -115,25 +115,27 @@ def timePlot(lintDict):
     #Y data
     yy = timeTable
     fig, ax = plt.subplots()
-    ax.plot(xx, yy, 'ro', markersize=20)
+    ax.plot(xx, yy, 'ro', markersize=10)
     plt.xlabel('Image Date', labelpad=20)
     plt.ylabel('Number of Dust Spots')
     plt.title('Number of Dust Spots versus Image Date')
     #plt.axis([amin(timeTable), amax(timeTable), amin(n1), amax(n1)])
-    plt.xticks(xx, allPossibleDates, rotation='horizontal')
+    plt.xticks(xx, allPossibleDates, rotation='vertical')
     plt.grid(True)
     # Give ourselves some more room at the bottom of the plot
     plt.subplots_adjust(bottom=.15)
+    #pad x axis ticks so that they dont overlap
+    ax.tick_params(axis='x', pad=10)
     #annotate points
-    for allPossibleDates, xx, yy in zip(allPossibleDates, xx, yy):
-        plt.annotate(
-            timeTable[xx],
-            xy=(xx, yy), xytext=(-20, 20),
-            textcoords='offset points', ha='right', va='bottom',
-            bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
-            arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
+    #for allPossibleDates, xx, yy in zip(allPossibleDates, xx, yy):
+    #    plt.annotate(
+    #        timeTable[xx],
+    #        xy=(xx, yy), xytext=(-20, 20),
+    #        textcoords='offset points', ha='right', va='bottom',
+    #        bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
+    #        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
     # Save histogram to file
-    fig.set_size_inches(18.5, 10.5)
+    fig.set_size_inches(25, 10.5)
     plotDir = os.path.join(os.path.dirname(lintDict['fitsPath']), os.path.pardir)
     fig.savefig(os.path.join(plotDir, 'DebrisOverTime.png'))
     #Save plot
