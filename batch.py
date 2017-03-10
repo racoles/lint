@@ -60,6 +60,7 @@ def processByDate(lintDict):
     #test the dimensions of the images in the directory
     #loadFITS.imageDimensionTest(lintDict['rows'], lintDict['columns'], loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     #group fits files by date
+    print('Grouping images by date...')
     dateList, allPossibleDates = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     print( "FITS files in directory: ", len(dateList))
     #LINT Processing loop
@@ -125,7 +126,7 @@ def timePlot(lintDict):
     # Give ourselves some more room at the bottom of the plot
     plt.subplots_adjust(bottom=.15)
     #pad x axis ticks so that they dont overlap
-    ax.tick_params(axis='x', pad=10)
+    plt.setp(ax.get_xticklabels(), rotation=45, horizontalalignment='right', fontsize=8)
     #annotate points
     #for allPossibleDates, xx, yy in zip(allPossibleDates, xx, yy):
     #    plt.annotate(
@@ -135,7 +136,7 @@ def timePlot(lintDict):
     #        bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
     #        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
     # Save histogram to file
-    fig.set_size_inches(25, 10.5)
+    fig.set_size_inches(30, 10.5)
     plotDir = os.path.join(os.path.dirname(lintDict['fitsPath']), os.path.pardir)
     fig.savefig(os.path.join(plotDir, 'DebrisOverTime.png'))
     #Save plot
