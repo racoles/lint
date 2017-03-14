@@ -4,15 +4,15 @@
 Updated on Apr 11, 2016
 
 autogroup:
-Create a list that groups the fits files by date.
+    Create a list that groups the fits files by date.
 
 processByDate:
-Run LINT on pre-grouped (by date) fits files
+    Run LINT on pre-grouped (by date) fits files.
 
 timePlot:
-#Plot the debris accumulation over time as: hist
-    X axis: time
-    Y axis: debris
+    Plot the debris accumulation over time as: scatter plot
+        X axis: time
+        Y axis: debris
 '''
 # Import
 import loadFITS, scaleAndStack, callSExtractor, analyzeSExOutput, datetime, os
@@ -58,7 +58,7 @@ def processByDate(lintDict):
 #Run LINT on grouped (by date) fits files
     print( "Looking in directory: ", lintDict['fitsPath'])
     #test the dimensions of the images in the directory
-    #loadFITS.imageDimensionTest(lintDict['rows'], lintDict['columns'], loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
+    loadFITS.imageDimensionTest(lintDict['rows'], lintDict['columns'], loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
     #group fits files by date
     print('Grouping images by date...')
     dateList, allPossibleDates = autoGroup(loadFITS.makeList(lintDict['fitsPath']), lintDict['ext'])
@@ -105,7 +105,7 @@ def processByDate(lintDict):
     return timeTable, allPossibleDates
         
 def timePlot(lintDict):
-#Plot the debris accumulation over time as: hist
+#Plot the debris accumulation over time as: scatterplot
 #X axis: time
 #Y axis: debris
     #process data
@@ -136,7 +136,7 @@ def timePlot(lintDict):
     #        bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
     #        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
     # Save histogram to file
-    fig.set_size_inches(30, 10.5)
+    fig.set_size_inches(40, 10.5)
     plotDir = os.path.join(os.path.dirname(lintDict['fitsPath']), os.path.pardir)
     fig.savefig(os.path.join(plotDir, 'DebrisOverTime.png'))
     #Save plot

@@ -10,7 +10,7 @@ import os, configparser
 from json import loads
 
 def loadConfig():
-#Load config.txt
+#Load LINT.config
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
     configParser = configparser.RawConfigParser()   
     configFilePath = os.path.join(__location__, 'LINT.config');

@@ -33,6 +33,10 @@ Modules:
     loadFits:
         Load fits files image data into a 3D array.
         Saves data to a fits file
+        Makes a directory for output products and move output products into it.
+        Scans the images to insure that they are all the same size dimensionally.
+    loadConfig
+        Load LINT.config
     overscan:
         Subtract and remove overscan (if overscanSubtractBOOL bool is true)
     scaleAndStack:
@@ -56,6 +60,10 @@ Modules:
         Make histograms of:
             area of debris
             debris versus clean area
+    batch
+        Create a list that groups the fits files by date.
+        Run LINT on pre-grouped (by date) fits files.
+        Plot the debris accumulation over time as: scatter plot
     
 To do:
     -add logger
