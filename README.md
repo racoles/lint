@@ -1,7 +1,7 @@
 # LINT
 Longitudinal Investigation of Non-Transparency (LINT): using flats from CCDs to find the amount of dust, debris, or other contamination present on a sensor's surface. This program uses flats from CCDs to find the amount of dust, debris, or other contamination present on a sensor's surface. 
 
-##The code will:
+## The code will:
 * Load flats (fits).
 * Subtract overscan and mask overscan regions (if overscanSubtractBOOL is "True").
 * Scale the flats to a common mean.
@@ -13,7 +13,7 @@ Longitudinal Investigation of Non-Transparency (LINT): using flats from CCDs to 
 * Analyze and plot histograms showing the amount of contamination.
 * Batch process data to show the accumulation of debris over time.
 
-##Programs, packages, and wrappers:
+## Programs, packages, and wrappers:
 * Interpreter: python 3
 * PyDev: 4.5.5.201603221110
 * Numpy: 1.11.0
@@ -23,7 +23,7 @@ Longitudinal Investigation of Non-Transparency (LINT): using flats from CCDs to 
 * SExtractor: 2.19.5-2
 * Matplotlib: 1.5.1-1ubuntu1
     
-##Modules:
+## Modules:
 testAstro: 
 * Test for issues with your astropy installation.
 loadFits:
@@ -57,7 +57,7 @@ batch:
 * Run LINT on pre-grouped (by date) fits files.
 * Plot the debris accumulation over time as: scatter plot.
     
-##To do:
+## To do:
 * Add logger.
 * Add help command in optional arguments.
 * Check to see if dependencies are installed.
@@ -65,7 +65,7 @@ batch:
 * Test installation code.
     
 ------------------------------------------------------------------------------------------------------------------------------
-##This research makes use of:
+## This research makes use of:
 * Astropy, a community-developed core Python package for Astronomy (Astropy Collaboration, 2013).
 * Bertin, E. & Arnouts, S. 1996: SExtractor: Software for source extraction, Astronomy & Astrophysics Supplement 317, 393
 * PyDev for Eclipse 4.5.5.201603221110 org.python.pydev.feature.feature.group Fabio Zadrozny
