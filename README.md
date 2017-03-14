@@ -46,7 +46,7 @@ scaleAndStack:
 skyValue:
 * Subtracts the average sky value from the median stacked image.
 
-callSExtractor
+callSExtractor:
 * Call SExtractor and send commands to process the stacked and inverted image. 
 * Record the output from SExtractor.
 
