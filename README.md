@@ -26,23 +26,30 @@ Longitudinal Investigation of Non-Transparency (LINT): using flats from CCDs to 
 ## Modules:
 testAstro: 
 * Test for issues with your astropy installation.
+
 loadFits:
 * Load fits files image data into a 3D array.
 * Saves data to a fits file.
 * Makes a directory for output products and move output products into it.
 * Scans the images to insure that they are all the same size dimensionally.
-loadConfig
+
+loadConfig:
 * Load LINT.config.
+
 overscan:
 * Subtract and remove overscan (if overscanSubtractBOOL bool is true).
+
 scaleAndStack:
 * Scales the images using a common mean (find the mean of all of the data and scale the data so that every image has that same baseline mean).
 * Stack the images, using a median, into a single flat field image (median the images: meaning that the resulting value in a pixel in the final image is the median of the values in that same pixel in the input images).
+
 skyValue:
 * Subtracts the average sky value from the median stacked image.
+
 callSExtractor
 * Call SExtractor and send commands to process the stacked and inverted image. 
 * Record the output from SExtractor.
+
 analyzeSExOutput:
 * Performs cuts to remove objects that are not debris.
    * Flags: no gremlins in photometry.
@@ -52,6 +59,7 @@ analyzeSExOutput:
 * Make histograms of:
    * Area of debris.
    * Debris versus clean area.
+
 batch:
 * Create a list that groups the fits files by date.
 * Run LINT on pre-grouped (by date) fits files.
